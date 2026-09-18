@@ -28,14 +28,14 @@ import {
 
 export default function AboutPage() {
   return (
-    <div className="relative bg-white text-[#09090B] font-sans antialiased selection:bg-black selection:text-white min-h-[calc(100vh-80px)]">
+    <div className="relative bg-transparent text-[#09090B] font-sans antialiased selection:bg-black selection:text-white min-h-[calc(100vh-80px)]">
       
       {/* 1. EDITORIAL HEADER & COMPANY OVERVIEW */}
-      <section className="pt-16 pb-20 sm:pt-24 sm:pb-28 border-b border-neutral-200 bg-white">
+      <section className="pt-16 pb-20 sm:pt-24 sm:pb-28 border-b border-neutral-300/80 bg-transparent">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center space-y-6">
           
           {/* Subtle Institutional Pill */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-3.5 py-1 text-xs font-mono font-medium text-neutral-600">
+          <div className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white/90 px-3.5 py-1 text-xs font-mono font-medium text-neutral-600 shadow-2xs">
             <span>ABOUT INNOTEK GLOBAL</span>
             <span>&bull;</span>
             <span>LONDON, UNITED KINGDOM</span>
@@ -64,7 +64,7 @@ export default function AboutPage() {
       </section>
 
       {/* 2. THE INNOTEK STORY (NARRATIVE ESSAY) */}
-      <section className="py-20 sm:py-28 border-b border-neutral-200 bg-white">
+      <section className="py-20 sm:py-28 border-b border-neutral-300/80 bg-[#F7F5F0]">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="space-y-4">
@@ -98,7 +98,7 @@ export default function AboutPage() {
       </section>
 
       {/* 3. MEET THE INNOTEK MASCOTS: GIZMO, BYTE & SPARK */}
-      <section className="py-20 sm:py-28 border-b border-neutral-200 bg-white">
+      <section className="py-20 sm:py-28 border-b border-neutral-300/80 bg-transparent">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -183,7 +183,7 @@ export default function AboutPage() {
       </section>
 
       {/* 4. OUR VALUES & CULTURE */}
-      <section className="py-20 sm:py-28 border-b border-neutral-200 bg-white">
+      <section className="py-20 sm:py-28 border-b border-neutral-300/80 bg-[#F7F5F0]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-16">
           
           <div className="max-w-2xl">
@@ -259,7 +259,7 @@ export default function AboutPage() {
       </section>
 
       {/* 5. OUR JOURNEY (MILESTONES TIMELINE) */}
-      <section className="py-20 sm:py-28 border-b border-neutral-200 bg-white">
+      <section className="py-20 sm:py-28 border-b border-neutral-300/80 bg-transparent">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div>
@@ -271,7 +271,7 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div className="relative border-l-2 border-neutral-200 pl-6 sm:pl-8 space-y-10">
+          <div className="relative border-l-2 border-neutral-300 pl-6 sm:pl-8 space-y-10">
             
             {/* 2023 */}
             <div className="relative">
@@ -327,7 +327,7 @@ export default function AboutPage() {
       </section>
 
       {/* 6. STATUTORY CORPORATE PROFILE */}
-      <section className="py-20 sm:py-28 border-b border-neutral-200 bg-white">
+      <section className="py-20 sm:py-28 border-b border-neutral-300/80 bg-[#F7F5F0]">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-8">
           
           <div className="text-center max-w-xl mx-auto space-y-2">
@@ -394,7 +394,7 @@ export default function AboutPage() {
       </section>
 
       {/* 7. WARM CLOSING INVITATION (NOT A SALES PITCH) */}
-      <section className="py-20 sm:py-24 bg-white text-center">
+      <section className="py-20 sm:py-24 bg-transparent text-center">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 space-y-6">
           
           <div className="inline-flex items-center justify-center h-12 w-12 rounded-2xl bg-neutral-100 text-black mx-auto">

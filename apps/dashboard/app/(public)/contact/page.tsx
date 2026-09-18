@@ -80,12 +80,12 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="relative bg-white text-[#09090B] font-sans antialiased min-h-[calc(100vh-80px)]">
+    <div className="relative bg-transparent text-[#09090B] font-sans antialiased min-h-[calc(100vh-80px)]">
       {/* 1. Header Banner */}
-      <section className="pt-16 pb-14 sm:pt-20 sm:pb-16 border-b border-neutral-200 bg-[#FAFAFA]">
+      <section className="pt-16 pb-14 sm:pt-20 sm:pb-16 border-b border-neutral-300/80 bg-[#F7F5F0]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center space-y-4">
           <ScrollReveal direction="up" delay={50} duration={600}>
-            <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3.5 py-1 text-xs font-mono font-medium text-neutral-600 shadow-2xs mb-2">
+            <div className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white/90 px-3.5 py-1 text-xs font-mono font-medium text-neutral-600 shadow-2xs mb-2">
               <MessageSquare className="h-3.5 w-3.5 text-black" />
               <span>CONTACT &amp; INQUIRIES</span>
               <span>&bull;</span>
@@ -104,7 +104,7 @@ export default function ContactPage() {
       </section>
 
       {/* 2. Main Contact Grid */}
-      <section className="py-16 sm:py-20 bg-white">
+      <section className="py-16 sm:py-20 bg-transparent">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
@@ -161,11 +161,11 @@ export default function ContactPage() {
                         For volume licensing, private model deployments, API quotas, and B2B vendor inquiries.
                       </p>
                       <a
-                        href="mailto:enterprise@innotek.global"
+                        href="mailto:contact@innotek.global"
                         className="text-xs font-bold text-black hover:underline inline-flex items-center gap-1 pt-1"
                       >
                         <Mail className="h-3.5 w-3.5 text-neutral-500" />
-                        <span>enterprise@innotek.global</span>
+                        <span>contact@innotek.global</span>
                       </a>
                     </div>
                   </div>
@@ -183,11 +183,11 @@ export default function ContactPage() {
                         For W-8BEN/W-9 validation, HMRC queries, UK ASA advertising compliance, and payout clearance.
                       </p>
                       <a
-                        href="mailto:compliance@innotek.global"
+                        href="mailto:support@innotek.global"
                         className="text-xs font-bold text-black hover:underline inline-flex items-center gap-1 pt-1"
                       >
                         <Mail className="h-3.5 w-3.5 text-neutral-500" />
-                        <span>compliance@innotek.global</span>
+                        <span>support@innotek.global</span>
                       </a>
                     </div>
                   </div>
