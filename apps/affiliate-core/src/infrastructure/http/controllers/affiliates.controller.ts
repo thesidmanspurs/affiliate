@@ -71,6 +71,13 @@ export class AffiliatesController {
     return { ok: true };
   }
 
+  @ApiOperation({ summary: 'Update partner profile, tax declaration, and payout settings' })
+  @Patch('profile')
+  async updateProfile(@Req() req: any, @Body() body: any) {
+    const affiliate = await this.affiliates.updateProfile(req.user.affiliateId, body);
+    return { ok: true, affiliate };
+  }
+
   @ApiOperation({ summary: 'Submit full multi-step compliance onboarding data' })
   @Post('onboarding')
   async submitOnboarding(@Req() req: any, @Body() body: any) {

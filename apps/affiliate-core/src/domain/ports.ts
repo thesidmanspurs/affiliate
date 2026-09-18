@@ -35,6 +35,7 @@ export interface AffiliateRepository {
   submitOnboarding(id: string, data: NonNullable<Affiliate['onboardingData']>): Promise<Affiliate>;
   reviewAffiliate(id: string, status: Affiliate['status'], rejectionReason?: string, reapplyAfter?: Date): Promise<Affiliate>;
   reapply(id: string): Promise<Affiliate>;
+  updateProfile(id: string, data: { tax?: any; promotional?: any; payout?: any; payoutMethod?: any }): Promise<Affiliate>;
 }
 
 export interface ClickRepository {

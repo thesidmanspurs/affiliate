@@ -99,6 +99,24 @@ export class PrismaAffiliateRepository implements AffiliateRepository {
     });
     return res as unknown as Affiliate;
   }
+  async updateProfile(id: string, data: { tax?: any; promotional?: any; payout?: any; payoutMethod?: any }): Promise<Affiliate> {
+    const existing = await this.prisma.affiliate.findUnique({ where: { id } });
+    const existingOnboarding = (existing?.onboardingData as any) || {};
+    const updatedOnboarding = {
+      ...existingOnboarding,
+      ...(data.tax ? { tax: { ...(existingOnboarding.tax || {}), ...data.tax } } : {}),
+      ...(data.promotional ? { promotional: { ...(existingOnboarding.promotional || {}), ...data.promotional } } : {}),
+      ...(data.payout ? { payout: { ...(existingOnboarding.payout || {}), ...data.payout } } : {}),
+    };
+    const res = await this.prisma.affiliate.update({
+      where: { id },
+      data: {
+        onboardingData: updatedOnboarding as Prisma.InputJsonValue,
+        ...(data.payoutMethod ? { payoutMethod: data.payoutMethod as Prisma.InputJsonValue } : {}),
+      },
+    });
+    return res as unknown as Affiliate;
+  }
 }
 
 @Injectable()
