@@ -2,6 +2,7 @@
 
 import { ExternalLink } from 'lucide-react';
 import Link from 'next/link';
+import { ScrollReveal } from '@/components/scroll-reveal';
 
 interface Testimonial {
   badge: string;
@@ -155,7 +156,7 @@ export function TestimonialsMarquee() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Header (PartnerStack Style) */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <ScrollReveal direction="up" delay={50} duration={650} className="text-center max-w-3xl mx-auto mb-14">
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-500 block mb-2">
             WHAT OUR AFFILIATES SAY
           </span>
@@ -171,10 +172,11 @@ export function TestimonialsMarquee() {
               <ExternalLink className="h-3.5 w-3.5" />
             </Link>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* 2-Row Continuous Seamless Infinite Auto-Scrolling Marquee */}
-        <div className="space-y-6 overflow-hidden relative">
+        <ScrollReveal direction="up" delay={150} duration={750}>
+          <div className="space-y-6 overflow-hidden relative">
           
           {/* Ambient Fade Mask on Left & Right */}
           <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-[#E5E8EC] to-transparent z-10 pointer-events-none" />
@@ -294,7 +296,8 @@ export function TestimonialsMarquee() {
             </div>
           </div>
 
-        </div>
+          </div>
+        </ScrollReveal>
 
       </div>
     </section>

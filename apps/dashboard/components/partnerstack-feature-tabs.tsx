@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { ScrollReveal } from '@/components/scroll-reveal';
 import {
   ArrowRight,
   Copy,
@@ -94,17 +95,18 @@ export function PartnerStackFeatureTabs() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Top Mini-Title & Main Bold Headline */}
-        <div className="max-w-3xl mb-12 sm:mb-16">
+        <ScrollReveal direction="up" delay={50} duration={650} className="max-w-3xl mb-12 sm:mb-16">
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-500 block mb-3">
             INNOTEK PLATFORM FEATURES
           </span>
           <h2 className="font-display text-4xl sm:text-6xl font-extrabold tracking-tight text-[#09090B] leading-[1.08]">
             Simplify your ecosystem — automate the hard stuff
           </h2>
-        </div>
+        </ScrollReveal>
 
         {/* 2-Column Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <ScrollReveal direction="up" delay={150} duration={700}>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
           {/* Left Column: 5 Vertical Tabs with 5-Second Solid Black Progress Bar */}
           <div className="lg:col-span-5 space-y-4">
@@ -424,8 +426,8 @@ export function PartnerStackFeatureTabs() {
 
             </div>
           </div>
-
         </div>
+      </ScrollReveal>
 
       </div>
     </section>

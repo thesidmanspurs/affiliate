@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ScrollReveal } from '@/components/scroll-reveal';
 
 export function PartnerStackHero() {
   return (
@@ -18,7 +19,7 @@ export function PartnerStackHero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
           {/* Left Hero Content (7 Cols) */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+          <ScrollReveal direction="up" delay={50} duration={650} className="lg:col-span-7 space-y-6 text-left">
             
             {/* Dark Navy / Black Pill Badge */}
             <div className="inline-flex items-center gap-2 rounded-full bg-black px-4 py-1.5 text-xs font-mono font-bold text-white shadow-xs">
@@ -68,11 +69,10 @@ export function PartnerStackHero() {
                 <span>Instant ID Provisioning</span>
               </span>
             </div>
-
-          </div>
+          </ScrollReveal>
 
           {/* Right Hero: Innotek Stacking Mascot Illustration with Official Coin */}
-          <div className="lg:col-span-5 relative flex items-center justify-center">
+          <ScrollReveal direction="left" delay={150} duration={700} className="lg:col-span-5 relative flex items-center justify-center">
             <div className="relative w-full max-w-[460px] flex items-center justify-center">
               
               {/* Soft Ambient Shadow Card Behind */}
@@ -89,12 +89,12 @@ export function PartnerStackHero() {
               </div>
 
             </div>
-          </div>
+          </ScrollReveal>
 
         </div>
 
         {/* Proof Metrics Ribbon Below Hero */}
-        <div className="mt-16 pt-10 border-t border-neutral-300/80">
+        <ScrollReveal direction="up" delay={200} duration={650} className="mt-16 pt-10 border-t border-neutral-300/80">
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-500 block mb-4">
             WHY JOIN INNOTEK PARTNER NETWORK?
           </span>
@@ -124,7 +124,7 @@ export function PartnerStackHero() {
               </p>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
       </div>
     </section>

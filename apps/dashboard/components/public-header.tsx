@@ -315,14 +315,17 @@ export function PublicHeader() {
       </div>
 
       {/* 3. MEGA-MENU CONTAINER: PLATFORM */}
-      {activeDropdown === 'platform' && (
-        <div
-          className="absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all"
-          onMouseEnter={() => {
-            if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
-          }}
-          onMouseLeave={handleMouseLeave}
-        >
+      <div
+        className={`absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all duration-300 ease-out origin-top ${
+          activeDropdown === 'platform'
+            ? 'opacity-100 translate-y-0 visible pointer-events-auto'
+            : 'opacity-0 -translate-y-2 invisible pointer-events-none'
+        }`}
+        onMouseEnter={() => {
+          if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+        }}
+        onMouseLeave={handleMouseLeave}
+      >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
             <div className="grid grid-cols-12 gap-8 items-start">
               
@@ -463,17 +466,19 @@ export function PublicHeader() {
             </div>
           </div>
         </div>
-      )}
 
       {/* 4. MEGA-MENU CONTAINER: SOLUTIONS */}
-      {activeDropdown === 'solutions' && (
-        <div
-          className="absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all"
-          onMouseEnter={() => {
-            if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
-          }}
-          onMouseLeave={handleMouseLeave}
-        >
+      <div
+        className={`absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all duration-300 ease-out origin-top ${
+          activeDropdown === 'solutions'
+            ? 'opacity-100 translate-y-0 visible pointer-events-auto'
+            : 'opacity-0 -translate-y-2 invisible pointer-events-none'
+        }`}
+        onMouseEnter={() => {
+          if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+        }}
+        onMouseLeave={handleMouseLeave}
+      >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
             <div className="grid grid-cols-12 gap-8 items-start">
               
@@ -574,17 +579,19 @@ export function PublicHeader() {
             </div>
           </div>
         </div>
-      )}
 
       {/* 5. MEGA-MENU CONTAINER: FOR PARTNERS & PUBLISHERS */}
-      {activeDropdown === 'partners' && (
-        <div
-          className="absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all"
-          onMouseEnter={() => {
-            if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
-          }}
-          onMouseLeave={handleMouseLeave}
-        >
+      <div
+        className={`absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all duration-300 ease-out origin-top ${
+          activeDropdown === 'partners'
+            ? 'opacity-100 translate-y-0 visible pointer-events-auto'
+            : 'opacity-0 -translate-y-2 invisible pointer-events-none'
+        }`}
+        onMouseEnter={() => {
+          if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+        }}
+        onMouseLeave={handleMouseLeave}
+      >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
             <div className="grid grid-cols-12 gap-8 items-start">
               
@@ -734,17 +741,19 @@ export function PublicHeader() {
             </div>
           </div>
         </div>
-      )}
 
       {/* 6. MEGA-MENU CONTAINER: RESOURCES */}
-      {activeDropdown === 'resources' && (
-        <div
-          className="absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all"
-          onMouseEnter={() => {
-            if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
-          }}
-          onMouseLeave={handleMouseLeave}
-        >
+      <div
+        className={`absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all duration-300 ease-out origin-top ${
+          activeDropdown === 'resources'
+            ? 'opacity-100 translate-y-0 visible pointer-events-auto'
+            : 'opacity-0 -translate-y-2 invisible pointer-events-none'
+        }`}
+        onMouseEnter={() => {
+          if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+        }}
+        onMouseLeave={handleMouseLeave}
+      >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
             <div className="grid grid-cols-12 gap-8 items-start">
               
@@ -888,7 +897,6 @@ export function PublicHeader() {
             </div>
           </div>
         </div>
-      )}
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (

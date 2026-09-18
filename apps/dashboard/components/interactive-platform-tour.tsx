@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { ScrollReveal } from '@/components/scroll-reveal';
 import {
   MousePointer2,
   Copy,
@@ -160,7 +161,7 @@ export function InteractivePlatformTour() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <ScrollReveal direction="up" delay={50} duration={650} className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-4 py-1.5 text-xs font-mono font-bold text-[#09090B] mb-3 shadow-2xs">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>LIVE INTERACTIVE SIMULATOR</span>
@@ -171,10 +172,11 @@ export function InteractivePlatformTour() {
           <p className="mt-3 text-sm sm:text-base text-neutral-600">
             Continuous real-time demonstration: instant tracking link generation, first-party cookie attribution, and transparent monthly ledger settlements.
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* Real Portal Simulation Browser Window */}
-        <div className="max-w-5xl mx-auto w-full relative rounded-2xl border border-neutral-300 bg-white shadow-2xl overflow-hidden h-[600px] min-h-[600px] max-h-[600px] flex flex-col justify-between select-none">
+        <ScrollReveal direction="up" delay={150} duration={750} distance={36} className="max-w-5xl mx-auto w-full">
+          <div className="w-full relative rounded-2xl border border-neutral-300 bg-white shadow-2xl overflow-hidden h-[600px] min-h-[600px] max-h-[600px] flex flex-col justify-between select-none">
           
           {/* Mock Browser Header Bar */}
           <div className="bg-[#0B1228] text-white px-4 sm:px-6 h-11 flex items-center justify-between border-b border-neutral-800 shrink-0">
@@ -715,7 +717,8 @@ export function InteractivePlatformTour() {
             </div>
           )}
 
-        </div>
+          </div>
+        </ScrollReveal>
 
       </div>
     </section>
