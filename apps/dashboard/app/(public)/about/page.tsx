@@ -103,26 +103,7 @@ export default function AboutPage() {
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Mascot Graphic Illustration */}
-            <div className="lg:col-span-6 flex justify-center">
-              {/* <div className="relative w-full max-w-[420px] rounded-3xl border border-neutral-200 bg-[#FAFAF4] p-6 sm:p-8 text-center shadow-xs"> */}
-                <img
-                  src="/images/innotek-hero-mascot.png"
-                  alt="Innotek Mascot Trio - Gizmo, Byte, and Spark with the Innotek Coin Medallion"
-                  className="w-full h-auto object-contain drop-shadow-md mx-auto"
-                />
-                {/* <div className="mt-4 pt-3 border-t border-neutral-200 text-center">
-                  <span className="font-display font-bold text-sm text-[#09090B] block">
-                    The Innotek Bots
-                  </span>
-                  <p className="text-xs text-neutral-500 mt-0.5 font-mono">
-                    Gizmo &bull; Byte &bull; Spark
-                  </p>
-                </div> */}
-              {/* </div> */}
-            </div>
-
-            {/* Mascot Story & Philosophy */}
+            {/* Mascot Story & Philosophy (Left Column) */}
             <div className="lg:col-span-6 space-y-6">
               
               <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-100 px-3.5 py-1 text-xs font-mono font-medium text-neutral-800">
@@ -185,6 +166,15 @@ export default function AboutPage() {
                 </span>
               </div>
 
+            </div>
+
+            {/* Mascot Graphic Illustration (Right Column) */}
+            <div className="lg:col-span-6 flex justify-center">
+              <img
+                src="/images/innotek-hero-mascot.png"
+                alt="Innotek Mascot Trio - Gizmo, Byte, and Spark with the Innotek Coin Medallion"
+                className="w-full h-auto object-contain drop-shadow-md mx-auto"
+              />
             </div>
 
           </div>
