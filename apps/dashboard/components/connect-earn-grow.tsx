@@ -19,7 +19,7 @@ export function ConnectEarnGrow() {
             <h2 className="font-display text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-black leading-[1.08] whitespace-nowrap">
               Connect. Earn. Grow.
             </h2>
-            <p className="mt-4 text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto">
+            <p className="relative top-[10px] mt-4 text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto">
               Build powerful B2B partnerships that fuel growth and drive revenue.
             </p>
           </ScrollReveal>
@@ -73,7 +73,7 @@ export function ConnectEarnGrow() {
                   </Link>
 
                   <Link
-                    href="/affiliate"
+                    href="/partner/docs"
                     className="inline-flex items-center justify-center gap-1 text-sm font-semibold text-neutral-600 hover:text-black hover:underline py-2 px-4 rounded-lg hover:bg-neutral-100 transition"
                   >
                     <span>Learn More</span>
@@ -89,7 +89,7 @@ export function ConnectEarnGrow() {
 
 
         {/* Decorative Bottom Illustration Graphic */}
-        <ScrollReveal direction="up" delay={150} duration={800} className="mt-16 relative top-[115px] max-w-7xl mx-auto bg-white">
+        <ScrollReveal direction="up" delay={150} duration={800} className="mt-16 relative top-[80px] max-w-7xl mx-auto bg-white">
           <img
             src="/images/innotek-partner-collage.jpg"
             alt="Innotek Global SaaS Partner Network - Connect, Earn, Grow"

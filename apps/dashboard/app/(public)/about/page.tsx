@@ -386,9 +386,16 @@ export default function AboutPage() {
 
             <div className="py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
               <span className="text-neutral-500 font-medium">General Inquiries:</span>
-              <a href="mailto:contact@innotek.global" className="text-black font-bold hover:underline">
-                contact@innotek.global
-              </a>
+              <div className="flex items-center gap-3">
+                <a href="mailto:contact@innotek.global" className="text-black font-bold hover:underline">
+                  contact@innotek.global
+                </a>
+                <span className="text-neutral-300">•</span>
+                <Link href="/contact" className="text-black font-bold hover:underline inline-flex items-center gap-1">
+                  <span>Contact Desk</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
             </div>
 
           </div>
@@ -427,13 +434,13 @@ export default function AboutPage() {
               <Code2 className="h-4 w-4 text-neutral-500" />
               <span>Developer Integration SDK</span>
             </Link> */}
-            <a
-              href="mailto:contact@innotek.global"
+            <Link
+              href="/contact"
               className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-black text-white hover:bg-neutral-800 transition shadow-2xs"
             >
               <Mail className="h-4 w-4" />
-              <span>Get in Touch</span>
-            </a>
+              <span>Contact Us</span>
+            </Link>
           </div>
 
         </div>

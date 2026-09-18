@@ -95,8 +95,8 @@ export function PartnerStackFAQSection() {
         {/* Bottom Help Text */}
         <ScrollReveal direction="up" delay={100} duration={600} className="mt-10 text-center text-xs font-mono text-neutral-500">
           <span>Still have questions? </span>
-          <Link href="/register" className="font-bold text-black underline underline-offset-4 hover:text-neutral-700">
-            Contact our partner success team →
+          <Link href="/contact" className="font-bold text-black underline underline-offset-4 hover:text-neutral-700">
+            Contact our team
           </Link>
         </ScrollReveal>
 

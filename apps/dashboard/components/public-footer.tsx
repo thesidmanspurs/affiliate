@@ -58,6 +58,11 @@ export function PublicFooter() {
                 </Link>
               </li>
               <li>
+                <Link href="/contact" className="hover:text-white hover:underline transition cursor-pointer block">
+                  Contact Us
+                </Link>
+              </li>
+              <li>
                 <Link href="/faq" className="hover:text-white hover:underline transition cursor-pointer block">
                   Frequently Asked Questions
                 </Link>
@@ -205,6 +210,9 @@ export function PublicFooter() {
             </Link>
             <Link href="/affiliate-agreement" className="hover:text-white hover:underline cursor-pointer">
               Affiliate Agreement
+            </Link>
+            <Link href="/contact" className="hover:text-white hover:underline cursor-pointer">
+              Contact
             </Link>
           </div>
         </div>
