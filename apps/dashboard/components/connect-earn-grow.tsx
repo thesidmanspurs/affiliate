@@ -10,11 +10,11 @@ export function ConnectEarnGrow() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Top Header */}
-        <ScrollReveal direction="up" delay={50} duration={650} className="text-center max-w-3xl mx-auto mb-16">
+        <ScrollReveal direction="up" delay={50} duration={650} className="text-center max-w-5xl mx-auto mb-16">
           <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500 block mb-3">
             GET STARTED WITH INNOTEK
           </span>
-          <h2 className="font-display text-5xl sm:text-8xl font-extrabold tracking-tight text-black leading-[1.08]">
+          <h2 className="font-display text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-black leading-[1.08] whitespace-nowrap">
             Connect. Earn. Grow.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto">
