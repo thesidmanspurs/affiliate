@@ -1,0 +1,13 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" fill="none">
+  <g fill="#FFFFFF">
+    <!-- Iconic Innotek Global "G" Geometric Mark in Crisp White -->
+    <path d="M24 4C12.954 4 4 12.954 4 24s8.954 20 20 20c8.837 0 16.326-5.729 18.995-13.714h-8.884C32.18 33.722 28.375 36 24 36c-6.627 0-12-5.373-12-12s5.373-12 12-12c4.375 0 8.18 2.278 10.111 5.714h8.884C40.326 9.729 32.837 4 24 4z" />
+    <circle cx="24" cy="24" r="5" />
+    <rect x="24" y="21.5" width="16" height="5" rx="2.5" />
+
+    <!-- Typography: INNOTEK (White) -->
+    <text x="54" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="900" letter-spacing="1.5">INNOTEK</text>
+    <!-- Typography: GLOBAL (Light Gray) -->
+    <text x="55" y="39" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" letter-spacing="4" fill="#A3A3A3">GLOBAL</text>
+  </g>
+</svg>
