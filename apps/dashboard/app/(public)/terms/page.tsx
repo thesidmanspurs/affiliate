@@ -1,14 +1,14 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { Scale, ArrowRight, ShieldCheck, Cpu, Terminal, Building2, Lock } from 'lucide-react';
 
 export default function TermsPage() {
   return (
-    <div className="relative py-16 sm:py-24 bg-[#FAFAF4] pattern-dots text-[#1B231D]">
+    <div className="relative py-16 sm:py-24 bg-white text-[#111827] min-h-[calc(100vh-80px)]">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D8E1D6] bg-white px-4 py-1.5 text-xs sm:text-sm font-mono font-bold text-black shadow-xs mb-4">
+          <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-4 py-1.5 text-xs sm:text-sm font-mono font-bold text-black shadow-2xs mb-4">
             <Scale className="h-4 w-4 text-[#10B981]" />
             <span>LEGAL JURISDICTION // ENGLAND &amp; WALES</span>
           </div>
@@ -18,14 +18,15 @@ export default function TermsPage() {
           <p className="mt-4 text-base sm:text-lg text-neutral-600 leading-relaxed font-normal">
             Platform governing laws, enterprise software licenses, and operational standards for Innotek Global Ltd.
           </p>
-          <div className="mt-4 inline-flex items-center gap-3 text-xs sm:text-sm font-mono text-neutral-600 bg-white border border-[#D8E1D6] px-4 py-1.5 rounded-full shadow-2xs">
+          <div className="mt-4 inline-flex items-center gap-3 text-xs sm:text-sm font-mono text-neutral-600 bg-neutral-50 border border-neutral-200 px-4 py-1.5 rounded-full shadow-2xs">
             <span className="font-bold text-black">Effective:</span> September 2026 &bull; <span className="font-bold text-black">Governing Law:</span> England &amp; Wales
           </div>
         </div>
 
         {/* Content Cards */}
-        <div className="space-y-8">
-          <section className="rounded-3xl border border-[#D8E1D6] bg-white p-7 sm:p-9 shadow-sm">
+        {/* Content Cards */}
+        <div className="space-y-6">
+          <section className="rounded-3xl border border-neutral-200 bg-white p-7 sm:p-9 shadow-xs hover:border-neutral-300 transition">
             <div className="flex items-center gap-3 mb-4">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white font-mono text-sm font-bold shadow-xs">
                 1
@@ -39,7 +40,7 @@ export default function TermsPage() {
             </p>
           </section>
 
-          <section className="rounded-3xl border border-[#D8E1D6] bg-white p-7 sm:p-9 shadow-sm">
+          <section className="rounded-3xl border border-neutral-200 bg-white p-7 sm:p-9 shadow-xs hover:border-neutral-300 transition">
             <div className="flex items-center gap-3 mb-4">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white font-mono text-sm font-bold shadow-xs">
                 2
@@ -53,7 +54,7 @@ export default function TermsPage() {
             </p>
           </section>
 
-          <section className="rounded-3xl border border-[#D8E1D6] bg-white p-7 sm:p-9 shadow-sm">
+          <section className="rounded-3xl border border-neutral-200 bg-white p-7 sm:p-9 shadow-xs hover:border-neutral-300 transition">
             <div className="flex items-center gap-3 mb-4">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white font-mono text-sm font-bold shadow-xs">
                 3
@@ -67,7 +68,7 @@ export default function TermsPage() {
             </p>
           </section>
 
-          <section className="rounded-3xl border border-[#D8E1D6] bg-white p-7 sm:p-9 shadow-sm">
+          <section className="rounded-3xl border border-neutral-200 bg-white p-7 sm:p-9 shadow-xs hover:border-neutral-300 transition">
             <div className="flex items-center gap-3 mb-4">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white font-mono text-sm font-bold shadow-xs">
                 4
@@ -86,7 +87,7 @@ export default function TermsPage() {
         <div className="mt-12 text-center">
           <Link
             href="/affiliate-agreement"
-            className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-bold text-black hover:underline bg-white border border-[#D8E1D6] px-5 py-2.5 rounded-xl shadow-xs"
+            className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-bold text-black hover:underline bg-white border border-neutral-200 px-5 py-2.5 rounded-xl shadow-xs hover:bg-neutral-50 transition"
           >
             <span>View Affiliate Operating Agreement</span>
             <ArrowRight className="h-4 w-4" />

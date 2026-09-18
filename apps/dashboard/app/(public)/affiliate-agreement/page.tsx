@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Link from 'next/link';
 import {
@@ -72,30 +72,30 @@ const PRODUCTS = [
 
 export default function AffiliateAgreementPage() {
   return (
-    <div className="relative py-16 sm:py-24 bg-[#F7F4EE] pattern-dots text-neutral-900">
+    <div className="relative py-16 sm:py-24 bg-white text-neutral-900 min-h-[calc(100vh-80px)]">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         
-        {/* Page Hero Header - Centered Style like MoodScanr */}
+        {/* Page Hero Header - Centered Style */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C2A5] bg-white px-4 py-1.5 text-xs sm:text-sm font-mono font-bold text-black shadow-xs mb-4">
+          <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-4 py-1.5 text-xs sm:text-sm font-mono font-bold text-black shadow-2xs mb-4">
             <FileText className="h-4 w-4 text-black" />
             <span>LEGAL &amp; PARTNER COMPLIANCE</span>
           </div>
           <h1 className="font-display text-3xl sm:text-5xl font-extrabold text-black tracking-tight leading-tight">
             Affiliate Operating Agreement
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-neutral-700 leading-relaxed font-normal">
+          <p className="mt-4 text-base sm:text-lg text-neutral-600 leading-relaxed font-normal">
             Enforceable operating terms, commission payout matrices, and legal attribution standards across the Innotek ecosystem.
           </p>
-          <div className="mt-4 inline-flex items-center gap-3 text-xs sm:text-sm font-mono text-neutral-600 bg-white border border-[#E0D8C8] px-4 py-1.5 rounded-full shadow-2xs">
+          <div className="mt-4 inline-flex items-center gap-3 text-xs sm:text-sm font-mono text-neutral-600 bg-neutral-50 border border-neutral-200 px-4 py-1.5 rounded-full shadow-2xs">
             <span className="font-bold text-black">Effective Date:</span> September 2026 &bull; <span className="font-bold text-black">Jurisdiction:</span> England &amp; Wales
           </div>
         </div>
 
-        {/* Top 3 Highlight Cards (Matching MoodScanr Privacy Top Feature Layout) */}
+        {/* Top 3 Highlight Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {/* Card 1 */}
-          <div className="rounded-3xl border border-[#E0D8C8] bg-white p-7 shadow-sm transition hover:-translate-y-0.5">
+          <div className="rounded-3xl border border-neutral-200 bg-white p-7 shadow-xs transition hover:-translate-y-0.5 hover:border-neutral-300">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-50 text-pink-600 border border-pink-200 mb-5 shadow-2xs">
               <Lock className="h-6 w-6" />
             </div>
@@ -108,7 +108,7 @@ export default function AffiliateAgreementPage() {
           </div>
 
           {/* Card 2 */}
-          <div className="rounded-3xl border border-[#E0D8C8] bg-white p-7 shadow-sm transition hover:-translate-y-0.5">
+          <div className="rounded-3xl border border-neutral-200 bg-white p-7 shadow-xs transition hover:-translate-y-0.5 hover:border-neutral-300">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-50 text-purple-600 border border-purple-200 mb-5 shadow-2xs">
               <ShieldCheck className="h-6 w-6" />
             </div>
@@ -121,7 +121,7 @@ export default function AffiliateAgreementPage() {
           </div>
 
           {/* Card 3 */}
-          <div className="rounded-3xl border border-[#E0D8C8] bg-white p-7 shadow-sm transition hover:-translate-y-0.5">
+          <div className="rounded-3xl border border-neutral-200 bg-white p-7 shadow-xs transition hover:-translate-y-0.5 hover:border-neutral-300">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 border border-cyan-200 mb-5 shadow-2xs">
               <Coins className="h-6 w-6" />
             </div>
@@ -152,7 +152,7 @@ export default function AffiliateAgreementPage() {
               This Affiliate Operating Agreement (&quot;Agreement&quot;) governs your participation in the Innotek Global Affiliate Programme. The network operator responsible for ledger attribution and settlements is:
             </p>
 
-            <div className="ml-11 rounded-2xl border border-[#E0D8C8] bg-white p-6 shadow-sm space-y-2 text-xs sm:text-sm font-sans">
+            <div className="ml-11 rounded-2xl border border-neutral-200 bg-white p-6 shadow-xs space-y-2 text-xs sm:text-sm font-sans">
               <p className="font-bold text-black text-base">Innotek Global Ltd</p>
               <p className="text-neutral-600"><strong>Official Website:</strong> <a href="https://innotek.global" target="_blank" rel="noopener noreferrer" className="text-black font-semibold underline">https://innotek.global</a></p>
               <p className="text-neutral-600"><strong>Partner &amp; Legal Contact:</strong> <code className="font-mono text-black font-semibold">affiliate@innotek.global</code> / <code className="font-mono text-black font-semibold">legal@innotek.global</code></p>
@@ -174,12 +174,12 @@ export default function AffiliateAgreementPage() {
               Approved partners are granted non-exclusive promotional rights across the following 7 software products:
             </p>
 
-            {/* Horizontal Rounded Bar Cards (Exactly like MoodScanr data list) */}
+            {/* Horizontal Rounded Bar Cards */}
             <div className="ml-11 space-y-3">
               {PRODUCTS.map((prod) => (
                 <div
                   key={prod.name}
-                  className="rounded-2xl border border-[#E0D8C8] bg-white p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-black transition"
+                  className="rounded-2xl border border-neutral-200 bg-white p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-black transition"
                 >
                   <div className="flex items-start gap-3 flex-1 min-w-0">
                     <span className={`h-2.5 w-2.5 rounded-full ${prod.accentDot} mt-1.5 shrink-0`} />
@@ -285,9 +285,9 @@ export default function AffiliateAgreementPage() {
               Affiliates must prominently disclose commercial compensation in compliance with international consumer protection standards:
             </p>
 
-            <div className="ml-11 rounded-2xl border border-[#E0D8C8] bg-white p-5 shadow-sm space-y-2">
+            <div className="ml-11 rounded-2xl border border-neutral-200 bg-white p-5 shadow-xs space-y-2">
               <span className="font-mono text-xs font-bold text-neutral-500 uppercase">Approved Disclaimer Format:</span>
-              <p className="font-mono text-xs sm:text-sm text-neutral-800 italic bg-[#FAF7F2] p-3.5 rounded-xl border border-[#E5DAC6]">
+              <p className="font-mono text-xs sm:text-sm text-neutral-800 italic bg-neutral-50 p-3.5 rounded-xl border border-neutral-200">
                 &quot;Disclosure: Some links on this channel are affiliate links. If you purchase through my link, I may earn a commission from Innotek Global Ltd at zero extra cost to you.&quot;
               </p>
             </div>
@@ -309,19 +309,19 @@ export default function AffiliateAgreementPage() {
             </p>
 
             <div className="ml-11 grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="rounded-2xl border border-[#E0D8C8] bg-white p-5 shadow-sm">
+              <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-xs">
                 <span className="block font-mono text-xs text-neutral-400 font-bold uppercase">UK Domestic</span>
                 <span className="font-display font-extrabold text-black text-base mt-1 block">Faster Payments</span>
                 <p className="text-xs text-neutral-600 mt-1">Direct UK bank transfer with Sort Code &amp; Account Number.</p>
               </div>
 
-              <div className="rounded-2xl border border-[#E0D8C8] bg-white p-5 shadow-sm">
+              <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-xs">
                 <span className="block font-mono text-xs text-neutral-400 font-bold uppercase">International</span>
                 <span className="font-display font-extrabold text-black text-base mt-1 block">SWIFT / IBAN Wire</span>
                 <p className="text-xs text-neutral-600 mt-1">Direct cross-border settlements for global partners.</p>
               </div>
 
-              <div className="rounded-2xl border border-[#E0D8C8] bg-white p-5 shadow-sm">
+              <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-xs">
                 <span className="block font-mono text-xs text-neutral-400 font-bold uppercase">Digital Rails</span>
                 <span className="font-display font-extrabold text-black text-base mt-1 block">Momo / PayPal</span>
                 <p className="text-xs text-neutral-600 mt-1">Instant electronic wallet payouts with £20 / $25 minimum.</p>

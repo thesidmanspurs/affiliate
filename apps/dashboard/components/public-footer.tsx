@@ -42,11 +42,11 @@ export function PublicFooter() {
                   <span className="text-[10px] font-mono bg-zinc-800 px-1.5 py-0.2 rounded text-zinc-300">New</span>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/dev/docs" className="hover:text-white hover:underline transition text-neutral-400 cursor-pointer block">
                   Developer SDK Docs
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link href="/affiliate" className="hover:text-white hover:underline transition cursor-pointer block">
                   Commission Structure

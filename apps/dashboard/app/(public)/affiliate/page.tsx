@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 
 const TIERS = [
@@ -55,11 +55,11 @@ const TIERS = [
 
 export default function AffiliateProgrammePage() {
   return (
-    <div className="relative py-20 sm:py-28 bg-[#FAFAF4] pattern-grid border-b border-[#D8E1D6] text-[#1B231D]">
+    <div className="relative py-20 sm:py-28 bg-white text-[#111827] min-h-[calc(100vh-80px)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D8E1D6] bg-white px-4 py-1.5 text-xs sm:text-sm font-mono font-bold text-black shadow-xs mb-4">
+          <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-4 py-1.5 text-xs sm:text-sm font-mono font-bold text-black shadow-2xs mb-4">
             <Sparkles className="h-4 w-4 text-[#10B981]" />
             <span>COMMISSION ARCHITECTURE</span>
           </div>
@@ -77,7 +77,7 @@ export default function AffiliateProgrammePage() {
             <div
               key={tier.name}
               className={`relative flex flex-col justify-between rounded-3xl border ${
-                tier.highlight ? 'border-black shadow-lg ring-1 ring-black' : 'border-[#D8E1D6] shadow-sm'
+                tier.highlight ? 'border-black shadow-lg ring-1 ring-black' : 'border-neutral-200 shadow-xs'
               } bg-white p-8 sm:p-10 transition-all duration-200 ${tier.scatterClass}`}
             >
               <div>
@@ -99,7 +99,7 @@ export default function AffiliateProgrammePage() {
                   <span className="text-sm sm:text-base font-mono font-bold text-neutral-500">Recurring</span>
                 </div>
 
-                <div className="space-y-2.5 py-4 border-y border-[#EFF3EC] text-xs sm:text-sm font-mono text-neutral-600">
+                <div className="space-y-2.5 py-4 border-y border-neutral-100 text-xs sm:text-sm font-mono text-neutral-600">
                   <p><strong>Volume:</strong> {tier.requirement}</p>
                   <p><strong>Payouts:</strong> {tier.payoutTerms}</p>
                 </div>
@@ -114,13 +114,13 @@ export default function AffiliateProgrammePage() {
                 </ul>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-[#EFF3EC]">
+              <div className="mt-8 pt-6 border-t border-neutral-100">
                 <Link
                   href="/register"
                   className={`w-full inline-flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm sm:text-base font-bold transition shadow-xs ${
                     tier.highlight
                       ? 'bg-black text-white hover:bg-neutral-800 shadow-md'
-                      : 'bg-white text-black hover:bg-[#FAFAF4] border border-[#D8E1D6]'
+                      : 'bg-white text-black hover:bg-neutral-50 border border-neutral-200'
                   }`}
                 >
                   <span>Apply for {tier.name}</span>

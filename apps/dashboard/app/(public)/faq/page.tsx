@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -39,10 +39,10 @@ export default function FAQPage() {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   return (
-    <div className="relative py-20 sm:py-28 bg-[#FAFAF4] pattern-dots-dense border-b border-[#D8E1D6] text-[#1B231D]">
+    <div className="relative py-20 sm:py-28 bg-white text-[#111827] min-h-[calc(100vh-80px)]">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D8E1D6] bg-white px-4 py-1.5 text-xs sm:text-sm font-mono font-bold text-black shadow-xs mb-4">
+          <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-4 py-1.5 text-xs sm:text-sm font-mono font-bold text-black shadow-2xs mb-4">
             <HelpCircle className="h-4 w-4 text-[#10B981]" />
             <span>SUPPORT &amp; GUIDANCE</span>
           </div>
@@ -61,11 +61,11 @@ export default function FAQPage() {
             return (
               <div
                 key={idx}
-                className="overflow-hidden rounded-2xl border border-[#D8E1D6] bg-white transition-all shadow-sm"
+                className="overflow-hidden rounded-2xl border border-neutral-200 bg-white transition-all shadow-xs hover:border-neutral-300"
               >
                 <button
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="flex w-full items-center justify-between p-6 sm:p-7 text-left"
+                  className="flex w-full items-center justify-between p-6 sm:p-7 text-left cursor-pointer"
                 >
                   <span className="font-display text-base sm:text-xl font-extrabold text-[#111827] pr-4">
                     {faq.q}
@@ -77,7 +77,7 @@ export default function FAQPage() {
                   />
                 </button>
                 {isOpen && (
-                  <div className="border-t border-[#EFF3EC] px-6 sm:px-7 pt-5 pb-7 text-sm sm:text-base text-neutral-600 leading-relaxed bg-[#FCFDFB]">
+                  <div className="border-t border-neutral-100 px-6 sm:px-7 pt-5 pb-7 text-sm sm:text-base text-neutral-600 leading-relaxed bg-neutral-50/60">
                     {faq.a}
                   </div>
                 )}
@@ -87,7 +87,7 @@ export default function FAQPage() {
         </div>
 
         {/* Help CTA */}
-        <div className="mt-16 text-center rounded-3xl border border-[#D8E1D6] bg-white p-8 sm:p-12 shadow-sm">
+        <div className="mt-16 text-center rounded-3xl border border-neutral-200 bg-white p-8 sm:p-12 shadow-xs">
           <h3 className="font-display text-xl sm:text-2xl font-extrabold text-[#111827] mb-2">Have a question not listed here?</h3>
           <p className="text-sm sm:text-base text-neutral-600 mb-6">Our partner operations team in London is available to assist you.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

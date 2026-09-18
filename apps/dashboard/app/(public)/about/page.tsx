@@ -28,7 +28,7 @@ import {
 
 export default function AboutPage() {
   return (
-    <div className="relative bg-transparent text-[#09090B] font-sans antialiased selection:bg-black selection:text-white">
+    <div className="relative bg-white text-[#09090B] font-sans antialiased selection:bg-black selection:text-white min-h-[calc(100vh-80px)]">
       
       {/* 1. EDITORIAL HEADER & COMPANY OVERVIEW */}
       <section className="pt-16 pb-20 sm:pt-24 sm:pb-28 border-b border-neutral-200 bg-white">
@@ -64,7 +64,7 @@ export default function AboutPage() {
       </section>
 
       {/* 2. THE INNOTEK STORY (NARRATIVE ESSAY) */}
-      <section className="py-20 sm:py-28 border-b border-neutral-200 bg-[#FAFAF4]">
+      <section className="py-20 sm:py-28 border-b border-neutral-200 bg-white">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="space-y-4">
@@ -140,7 +140,7 @@ export default function AboutPage() {
 
               {/* Individual Mascot Profiles */}
               <div className="space-y-3.5 pt-2">
-                <div className="p-4 rounded-2xl border border-neutral-200 bg-[#FAFAF4] flex items-start gap-3.5">
+                <div className="p-4 rounded-2xl border border-neutral-200 bg-white shadow-2xs flex items-start gap-3.5">
                   <span className="h-6 w-6 rounded-full bg-black text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                     G
                   </span>
@@ -152,7 +152,7 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl border border-neutral-200 bg-[#FAFAF4] flex items-start gap-3.5">
+                <div className="p-4 rounded-2xl border border-neutral-200 bg-white shadow-2xs flex items-start gap-3.5">
                   <span className="h-6 w-6 rounded-full bg-black text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                     B
                   </span>
@@ -164,7 +164,7 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl border border-neutral-200 bg-[#FAFAF4] flex items-start gap-3.5">
+                <div className="p-4 rounded-2xl border border-neutral-200 bg-white shadow-2xs flex items-start gap-3.5">
                   <span className="h-6 w-6 rounded-full bg-black text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                     S
                   </span>
@@ -193,7 +193,7 @@ export default function AboutPage() {
       </section>
 
       {/* 4. OUR VALUES & CULTURE */}
-      <section className="py-20 sm:py-28 border-b border-neutral-200 bg-[#FAFAF4]">
+      <section className="py-20 sm:py-28 border-b border-neutral-200 bg-white">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-16">
           
           <div className="max-w-2xl">
