@@ -1,0 +1,190 @@
+// Schema riêng cho affiliate platform. Dù chạy chung DB với 1 sản phẩm ở giai đoạn
+// đầu, nên đặt trong schema Postgres riêng (xem @@schema) để mai mốt tách DB dễ dàng.
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+  schemas  = ["affiliate"]
+}
+
+enum AffiliateStatus {
+  ONBOARDING_REQUIRED
+  PENDING_REVIEW
+  ACTIVE
+  REJECTED
+  SUSPENDED
+
+  @@schema("affiliate")
+}
+
+enum ConversionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+
+  @@schema("affiliate")
+}
+
+enum ConversionType {
+  NEW_PURCHASE
+  RENEWAL
+
+  @@schema("affiliate")
+}
+
+enum LedgerStatus {
+  PENDING
+  APPROVED
+  PAID
+
+  @@schema("affiliate")
+}
+
+enum PayoutStatus {
+  REQUESTED
+  PROCESSING
+  PAID
+  FAILED
+
+  @@schema("affiliate")
+}
+
+// 1 merchant = 1 sản phẩm tích hợp (MoodScanr, sản phẩm B, C...).
+// apiKeyHash dùng để xác thực request server-to-server từ product backend.
+model Merchant {
+  id            String   @id @default(uuid())
+  productId     String   @unique // slug: "moodscanr", "product-b"...
+  name          String
+  apiKeyHash    String
+  webhookSecret String
+  isActive      Boolean  @default(true)
+  defaultCommissionRate Float?   @default(0.20)
+  commissionType        String?  @default("recurring")
+  logoUrl               String?
+  logoSize              Int?     @default(40)
+  createdAt     DateTime @default(now())
+
+  affiliates Affiliate[]
+  clicks     ReferralClick[]
+  conversions Conversion[]
+
+  @@schema("affiliate")
+}
+
+// Tài khoản affiliate KHÔNG liên kết FK cứng tới User của sản phẩm - chỉ lưu
+// externalUserId (nếu affiliate đó cũng là user) + email snapshot.
+model Affiliate {
+  id              String          @id @default(uuid())
+  merchantId      String
+  merchant        Merchant        @relation(fields: [merchantId], references: [id])
+  email           String
+  passwordHash    String
+  code            String          @unique
+  status          AffiliateStatus @default(ONBOARDING_REQUIRED)
+  commissionRate  Float           @default(0.20) // 20% mặc định, override theo tier nếu cần
+  payoutMethod    Json? // { type: "bank" | "paypal" | "wise" | "crypto", details: {...} }
+  onboardingData  Json? // { promotional: {...}, tax: {...}, payout: {...} }
+  submittedAt     DateTime?
+  reviewedAt      DateTime?
+  rejectionReason String?
+  reapplyAfter    DateTime? // 7-day cooldown timer when rejected
+  createdAt       DateTime        @default(now())
+
+  clicks      ReferralClick[]
+  conversions Conversion[]
+  ledger      CommissionLedger[]
+  payouts     Payout[]
+
+  @@unique([merchantId, email])
+  @@index([merchantId])
+  @@schema("affiliate")
+}
+
+// Mỗi click ghi 1 lần, idempotent theo clickId do product backend sinh ra
+// (UUID) ngay tại thời điểm redirect - không phải id tự tăng ở đây.
+model ReferralClick {
+  id             String   @id @default(uuid())
+  clickId        String   @unique // idempotency key
+  merchantId     String
+  merchant       Merchant @relation(fields: [merchantId], references: [id])
+  affiliateCode  String
+  affiliateId    String?
+  affiliate      Affiliate? @relation(fields: [affiliateId], references: [id])
+  ipHash         String?
+  userAgent      String?
+  createdAt      DateTime @default(now())
+
+  conversions Conversion[]
+
+  @@index([merchantId, affiliateCode])
+  @@schema("affiliate")
+}
+
+// Idempotent theo eventId (= stripeEventId / invoiceId phía product).
+// KHÔNG update trực tiếp số dư ở đâu cả - conversion chỉ chuyển status,
+// số tiền hoa hồng thật sự nằm ở CommissionLedger (append-only).
+model Conversion {
+  id             String           @id @default(uuid())
+  eventId        String           @unique // idempotency key
+  merchantId     String
+  merchant       Merchant         @relation(fields: [merchantId], references: [id])
+  clickId        String?
+  click          ReferralClick?   @relation(fields: [clickId], references: [id])
+  affiliateId    String?
+  affiliate      Affiliate?       @relation(fields: [affiliateId], references: [id])
+  externalUserId String
+  orderId        String
+  amount         Int // đơn vị: cent/xu, tránh float
+  currency       String           @default("USD")
+  type           ConversionType   @default(NEW_PURCHASE)
+  status         ConversionStatus @default(PENDING)
+  approvedAt     DateTime? // = createdAt + buffer window (vd 14 ngày)
+  createdAt      DateTime         @default(now())
+
+  ledgerEntry CommissionLedger?
+
+  @@index([merchantId, affiliateId])
+  @@schema("affiliate")
+}
+
+// Append-only. Số dư khả dụng = SUM(amount) WHERE status = APPROVED.
+// KHÔNG BAO GIỜ update amount của 1 row đã ghi - muốn điều chỉnh thì
+// ghi thêm 1 row bù trừ (âm), không sửa row cũ.
+model CommissionLedger {
+  id           String       @id @default(uuid())
+  affiliateId  String
+  affiliate    Affiliate    @relation(fields: [affiliateId], references: [id])
+  conversionId String       @unique
+  conversion   Conversion   @relation(fields: [conversionId], references: [id])
+  amount       Int // hoa hồng thực nhận, đơn vị cent/xu
+  currency     String       @default("USD")
+  status       LedgerStatus @default(APPROVED)
+  payoutId     String?
+  payout       Payout?      @relation(fields: [payoutId], references: [id])
+  createdAt    DateTime     @default(now())
+
+  @@index([affiliateId, status])
+  @@schema("affiliate")
+}
+
+model Payout {
+  id          String       @id @default(uuid())
+  affiliateId String
+  affiliate   Affiliate    @relation(fields: [affiliateId], references: [id])
+  amount      Int
+  currency    String       @default("USD")
+  method      String // "bank_manual" | "momo" | "stripe_transfer"...
+  externalRef String?
+  status      PayoutStatus @default(REQUESTED)
+  createdAt   DateTime     @default(now())
+
+  ledgerEntries CommissionLedger[]
+
+  @@schema("affiliate")
+}
