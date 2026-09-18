@@ -16,16 +16,16 @@ export default function AdminLayout({
 
   if (isDossierPage) {
     return (
-      <div className="min-h-screen bg-transparent text-[#09090B] selection:bg-black selection:text-white font-sans">
+      <div className="min-h-screen bg-white text-[#09090B] selection:bg-black selection:text-white font-sans">
         {children}
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-transparent text-[#09090B] selection:bg-black selection:text-white font-sans">
+    <div className="flex min-h-screen flex-col bg-white text-[#09090B] selection:bg-black selection:text-white font-sans">
       <AdminNav />
-      <main className="flex-1 mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <main className="flex-1 mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 bg-white">
         {children}
       </main>
     </div>

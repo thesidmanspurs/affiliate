@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -46,7 +46,7 @@ export function PartnerStackFAQSection() {
   };
 
   return (
-    <section id="faq" className="py-20 sm:py-28 bg-[#F7F5F0] border-b border-neutral-200">
+    <section id="faq" className="py-20 sm:py-28 bg-white border-b border-neutral-200">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

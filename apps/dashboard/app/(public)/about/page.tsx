@@ -337,7 +337,7 @@ export default function AboutPage() {
       </section>
 
       {/* 6. STATUTORY CORPORATE PROFILE */}
-      <section className="py-20 sm:py-28 border-b border-neutral-200 bg-[#FAFAF4]">
+      <section className="py-20 sm:py-28 border-b border-neutral-200 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-8">
           
           <div className="text-center max-w-xl mx-auto space-y-2">

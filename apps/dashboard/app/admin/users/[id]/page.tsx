@@ -235,7 +235,7 @@ export default function AffiliateComplianceDossierPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#E5E8EC] p-6 flex flex-col items-center justify-center text-center">
+      <div className="min-h-screen bg-white p-6 flex flex-col items-center justify-center text-center">
         <RefreshCw className="h-8 w-8 animate-spin text-neutral-600 mb-3" />
         <p className="font-mono text-sm font-bold text-neutral-800 uppercase tracking-wider">
           Retrieving Official Legal Dossier &amp; HMRC Audit Trail...
@@ -246,7 +246,7 @@ export default function AffiliateComplianceDossierPage() {
 
   if (actionError || !data) {
     return (
-      <div className="min-h-screen bg-[#E5E8EC] p-6 flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-white p-6 flex flex-col items-center justify-center">
         <div className="max-w-md w-full bg-white border border-neutral-300 p-6 shadow-sm text-center space-y-4">
           <AlertTriangle className="h-10 w-10 text-rose-600 mx-auto" />
           <h2 className="font-sans text-xl font-extrabold text-[#09090B]">Dossier Not Found or Load Error</h2>

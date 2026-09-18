@@ -317,7 +317,7 @@ export function PublicHeader() {
       {/* 3. MEGA-MENU CONTAINER: PLATFORM */}
       {activeDropdown === 'platform' && (
         <div
-          className="absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all"
+          className="absolute left-0 right-0 top-full z-50 bg-white text-[#09090B] border-t border-neutral-200 shadow-2xl transition-all"
           onMouseEnter={() => {
             if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
           }}
@@ -468,7 +468,7 @@ export function PublicHeader() {
       {/* 4. MEGA-MENU CONTAINER: SOLUTIONS */}
       {activeDropdown === 'solutions' && (
         <div
-          className="absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all"
+          className="absolute left-0 right-0 top-full z-50 bg-white text-[#09090B] border-t border-neutral-200 shadow-2xl transition-all"
           onMouseEnter={() => {
             if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
           }}
@@ -579,7 +579,7 @@ export function PublicHeader() {
       {/* 5. MEGA-MENU CONTAINER: FOR PARTNERS & PUBLISHERS */}
       {activeDropdown === 'partners' && (
         <div
-          className="absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all"
+          className="absolute left-0 right-0 top-full z-50 bg-white text-[#09090B] border-t border-neutral-200 shadow-2xl transition-all"
           onMouseEnter={() => {
             if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
           }}
@@ -739,7 +739,7 @@ export function PublicHeader() {
       {/* 6. MEGA-MENU CONTAINER: RESOURCES */}
       {activeDropdown === 'resources' && (
         <div
-          className="absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all"
+          className="absolute left-0 right-0 top-full z-50 bg-white text-[#09090B] border-t border-neutral-200 shadow-2xl transition-all"
           onMouseEnter={() => {
             if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
           }}

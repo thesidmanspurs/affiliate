@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import { CoinsBackgroundPattern } from '@/components/coins-background-pattern';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -35,9 +34,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-GB" className="scroll-smooth">
-      <body className={`${inter.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} font-sans bg-[#E5E8EC] text-[#09090B] antialiased selection:bg-black selection:text-white relative min-h-screen`}>
-        <CoinsBackgroundPattern />
-        <div className="relative z-10 min-h-screen flex flex-col">
+      <body className={`${inter.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} font-sans bg-white text-[#09090B] antialiased selection:bg-black selection:text-white relative min-h-screen`}>
+        <div className="relative z-10 min-h-screen flex flex-col bg-white">
           {children}
         </div>
       </body>

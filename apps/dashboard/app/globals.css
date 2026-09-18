@@ -9,10 +9,10 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     -webkit-text-size-adjust: 100%;
-    background-color: #E5E8EC;
+    background-color: #ffffff;
   }
   body {
-    background-color: #E5E8EC;
+    background-color: #ffffff;
     @apply text-[#09090B] antialiased selection:bg-black selection:text-white font-sans;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum";
   }

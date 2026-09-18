@@ -462,7 +462,7 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#E5E8EC] text-[#09090B] font-sans selection:bg-black selection:text-white flex flex-col justify-between">
+    <div className="min-h-screen bg-white text-[#09090B] font-sans selection:bg-black selection:text-white flex flex-col justify-between">
       
       {/* ── TOP GOVERNMENT / OFFICIAL INSTITUTIONAL MASTHEAD ── */}
       <header className="border-b-2 border-black bg-white sticky top-0 z-30 shadow-2xs">
