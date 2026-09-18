@@ -9,21 +9,14 @@ export default async function ProductsMarketplacePage() {
     code: 'INNOTEK',
     commissionRate: 0.20,
     status: 'ACTIVE' as const,
-    onboardingData: null as any,
   };
 
-  let programs: any[] = [];
-
   try {
-    const [fetchedProfile, fetchedPrograms] = await Promise.all([
-      apiFetch<any>('/affiliates/me/profile', token).catch(() => null),
-      apiFetch<any[]>('/affiliates/me/programs', token).catch(() => []),
-    ]);
-    if (fetchedProfile) profile = fetchedProfile;
-    if (fetchedPrograms && Array.isArray(fetchedPrograms)) programs = fetchedPrograms;
+    const fetched = await apiFetch<any>('/affiliates/me/profile', token);
+    if (fetched) profile = fetched;
   } catch (err) {
     console.error('Failed to load profile for products:', err);
   }
 
-  return <ProductsMarketplaceClient profile={profile} initialPrograms={programs} />;
+  return <ProductsMarketplaceClient profile={profile} />;
 }

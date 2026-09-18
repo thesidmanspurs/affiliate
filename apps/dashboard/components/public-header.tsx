@@ -140,7 +140,7 @@ export function PublicHeader() {
                 className="h-8 w-auto object-contain"
               />
             </div>
-            <span className="font-mono text-[11px] font-bold text-neutral-500 bg-neutral-100 border border-neutral-200 px-2 py-0.5 rounded tracking-wider uppercase">
+            <span className="relative left-[-13px] font-display text-[13px] font-bold text-black border border-neutral-100 px-2 py-0.5 uppercase ">
               Affiliate Network
             </span>
           </Link>
