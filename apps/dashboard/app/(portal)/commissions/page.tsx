@@ -20,10 +20,13 @@ export default async function CommissionsPage() {
     onboardingData: null,
   };
 
+  let programs: any[] = [];
+
   try {
-    const [fetchedStats, fetchedProfile] = await Promise.all([
+    const [fetchedStats, fetchedProfile, fetchedPrograms] = await Promise.all([
       apiFetch<any>('/affiliates/me/stats', token).catch(() => null),
       apiFetch<AffiliateProfile>('/affiliates/me/profile', token).catch(() => null),
+      apiFetch<any[]>('/affiliates/me/programs', token).catch(() => []),
     ]);
     if (fetchedStats) {
       summary = {
@@ -33,6 +36,7 @@ export default async function CommissionsPage() {
       };
     }
     if (fetchedProfile) profile = fetchedProfile;
+    if (fetchedPrograms && Array.isArray(fetchedPrograms)) programs = fetchedPrograms;
   } catch (err) {
     console.error('Failed to load commissions data:', err);
   }
@@ -42,6 +46,7 @@ export default async function CommissionsPage() {
       initialSummary={summary}
       profile={profile}
       initialCommissions={[]}
+      initialPrograms={programs}
     />
   );
 }

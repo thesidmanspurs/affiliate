@@ -213,6 +213,53 @@ export class AdminController {
     });
     if (!a) throw new NotFoundException('Affiliate not found');
 
+    const [merchants, conversions] = await Promise.all([
+      this.prisma.merchant.findMany({ where: { isActive: true }, orderBy: { createdAt: 'asc' } }),
+      this.prisma.conversion.findMany({
+        where: { affiliateId: id },
+        include: { merchant: true },
+      }),
+    ]);
+
+    const onboarding = (a.onboardingData as any) || {};
+    const programs = onboarding.programs || {};
+    const defaultRate = a.commissionRate ?? 0.20;
+
+    const productBreakdown = merchants.map((m) => {
+      const meta = PRODUCT_METADATA[m.productId] || {};
+      const enrollment = programs[m.productId];
+      const prodConversions = conversions.filter((c) => c.merchantId === m.id || c.merchant?.productId === m.productId);
+      
+      const sourcedRevenue = prodConversions.reduce((sum, c) => sum + c.amount, 0);
+      const rate = m.defaultCommissionRate ?? defaultRate;
+      const commissionEarned = prodConversions.reduce((sum, c) => sum + Math.round(c.amount * rate), 0);
+
+      let status: 'ACTIVE' | 'PENDING_REVIEW' | 'NOT_ENROLLED' | 'REJECTED' = 'NOT_ENROLLED';
+      if (enrollment) {
+        status = enrollment.status === 'ACTIVE' ? 'ACTIVE' : enrollment.status;
+      } else if (a.status === 'ACTIVE' && (a.merchantId === m.id || !a.merchantId)) {
+        status = 'ACTIVE';
+      }
+
+      return {
+        merchantId: m.id,
+        productId: m.productId,
+        name: m.name,
+        category: meta.category || 'AI SaaS',
+        defaultCommissionRate: m.defaultCommissionRate ?? meta.defaultCommissionRate ?? 0.20,
+        status,
+        enrolledAt: enrollment?.enrolledAt || (status === 'ACTIVE' ? a.reviewedAt || a.createdAt : null),
+        strategyNotes: enrollment?.strategyNotes || '',
+        linkedTaxForm: enrollment?.linkedTaxForm || onboarding.tax?.formType || onboarding.tax?.taxForm || 'W-8BEN',
+        linkedLegalName: enrollment?.linkedLegalName || onboarding.tax?.legalName || onboarding.tax?.signedName || '',
+        linkedTaxId: enrollment?.linkedTaxId || (onboarding.tax?.taxId ? `***${onboarding.tax.taxId.slice(-4)}` : 'CERTIFIED'),
+        linkedTaxCountry: enrollment?.linkedTaxCountry || onboarding.tax?.taxCountry || onboarding.tax?.country || 'GB',
+        conversionsCount: prodConversions.length,
+        sourcedRevenue, // in cents
+        commissionEarned, // in cents
+      };
+    });
+
     const totalEarned = a.ledger.reduce((sum, e) => sum + e.amount, 0);
     const paidEarned = a.ledger.filter((e) => e.status === 'PAID').reduce((sum, e) => sum + e.amount, 0);
     const availableBalance = a.ledger.filter((e) => e.status === 'APPROVED').reduce((sum, e) => sum + e.amount, 0);
@@ -237,6 +284,7 @@ export class AdminController {
       rejectionReason: a.rejectionReason,
       reapplyAfter: a.reapplyAfter,
       createdAt: a.createdAt,
+      productBreakdown,
     };
   }
 
@@ -272,6 +320,45 @@ export class AdminController {
         },
       });
     }
+  }
+
+  @ApiOperation({ summary: 'Admin approve / reject partner enrollment for a specific program' })
+  @Post('affiliates/:id/programs/:productId/review')
+  async reviewProgramEnrollment(
+    @Param('id') id: string,
+    @Param('productId') productId: string,
+    @Body() dto: { action: 'APPROVE' | 'REJECT' | 'REVOKE'; rejectionReason?: string },
+  ) {
+    const affiliate = await this.prisma.affiliate.findUnique({ where: { id } });
+    if (!affiliate) throw new NotFoundException('Affiliate not found');
+
+    const onboarding = (affiliate.onboardingData as any) || {};
+    const programs = onboarding.programs || {};
+    const existingProg = programs[productId] || { productId, enrolledAt: new Date().toISOString() };
+
+    const newStatus = dto.action === 'APPROVE' ? 'ACTIVE' : dto.action === 'REJECT' ? 'REJECTED' : 'PENDING_REVIEW';
+
+    const updatedPrograms = {
+      ...programs,
+      [productId]: {
+        ...existingProg,
+        status: newStatus,
+        reviewedAt: new Date().toISOString(),
+        rejectionReason: dto.rejectionReason || null,
+      },
+    };
+
+    await this.prisma.affiliate.update({
+      where: { id },
+      data: {
+        onboardingData: {
+          ...onboarding,
+          programs: updatedPrograms,
+        },
+      },
+    });
+
+    return { ok: true, programs: updatedPrograms };
   }
 
   @ApiOperation({ summary: 'Update Affiliate status or commission rate' })

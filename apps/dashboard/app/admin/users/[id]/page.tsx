@@ -14,7 +14,27 @@ import {
   Copy,
   Check,
   RefreshCw,
+  Layers,
+  DollarSign,
 } from 'lucide-react';
+
+export interface ProductBreakdownItem {
+  merchantId: string;
+  productId: string;
+  name: string;
+  category: string;
+  defaultCommissionRate: number;
+  status: 'ACTIVE' | 'PENDING_REVIEW' | 'NOT_ENROLLED' | 'REJECTED';
+  enrolledAt: string | null;
+  strategyNotes: string;
+  linkedTaxForm: string;
+  linkedLegalName: string;
+  linkedTaxId: string;
+  linkedTaxCountry: string;
+  conversionsCount: number;
+  sourcedRevenue: number;
+  commissionEarned: number;
+}
 
 interface AffiliateComplianceData {
   id: string;
@@ -30,6 +50,7 @@ interface AffiliateComplianceData {
   paidEarned: number;
   availableBalance: number;
   payoutMethod: any;
+  productBreakdown?: ProductBreakdownItem[];
   onboardingData?: {
     promotional?: {
       niche?: string;
@@ -136,6 +157,30 @@ export default function AffiliateComplianceDossierPage() {
   const [declineReason, setDeclineReason] = useState(PRESET_REJECTION_REASONS[0]);
   const [customDeclineReason, setCustomDeclineReason] = useState('');
   const [copiedHash, setCopiedHash] = useState(false);
+  const [programActionLoading, setProgramActionLoading] = useState<string | null>(null);
+
+  const handleProgramAction = async (productId: string, action: 'APPROVE' | 'REJECT' | 'REVOKE') => {
+    if (!affiliateId) return;
+    setProgramActionLoading(productId);
+    try {
+      const res = await fetch(`http://localhost:4100/api/admin/affiliates/${affiliateId}/programs/${productId}/review`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || 'Failed to update program status');
+      }
+      setSuccessToast(`Program ${productId} updated to ${action}`);
+      setTimeout(() => setSuccessToast(null), 3000);
+      fetchDossier();
+    } catch (err: any) {
+      alert(err.message || 'Failed to update program status');
+    } finally {
+      setProgramActionLoading(null);
+    }
+  };
 
   const fetchDossier = async () => {
     if (!affiliateId) return;
@@ -406,6 +451,137 @@ export default function AffiliateComplianceDossierPage() {
                 <span>Decline Application</span>
               </button>
             )}
+          </div>
+
+        </div>
+      </div>
+
+            {/* ── MULTI-PRODUCT ENROLLMENT & SOURCED REVENUE BREAKDOWN (Print-Hidden) ── */}
+      <div className="max-w-4xl mx-auto my-6 space-y-4 print:hidden">
+        <div className="border border-neutral-300 bg-white p-6 shadow-2xs space-y-5 rounded-none">
+          
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-neutral-200">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-black text-white px-2 py-0.5">
+                  Multi-Program Breakdown
+                </span>
+                <span className="text-xs text-neutral-500 font-semibold">
+                  Partner Attribution
+                </span>
+              </div>
+              <h2 className="text-lg font-black text-[#09090B] mt-1 tracking-tight">
+                Program Registrations &amp; Sourced Revenue
+              </h2>
+              <p className="text-xs text-neutral-600 mt-0.5">
+                Isolated revenue performance, linked tax verification, and program enrollment controls for each individual AI SaaS product.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 shrink-0">
+              <div className="border border-neutral-200 bg-neutral-50 px-3 py-2 text-right">
+                <span className="text-[10px] uppercase font-bold text-neutral-400 block">Total Sourced Sales</span>
+                <strong className="text-sm font-extrabold text-[#09090B]">
+                  ${((data.productBreakdown?.reduce((sum, p) => sum + p.sourcedRevenue, 0) || 0) / 100).toFixed(2)}
+                </strong>
+              </div>
+              <div className="border border-neutral-200 bg-neutral-50 px-3 py-2 text-right">
+                <span className="text-[10px] uppercase font-bold text-neutral-400 block">Total Conversions</span>
+                <strong className="text-sm font-extrabold text-emerald-700">
+                  {data.productBreakdown?.reduce((sum, p) => sum + p.conversionsCount, 0) || 0}
+                </strong>
+              </div>
+            </div>
+          </div>
+
+          {/* Program Table */}
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr className="border-b border-neutral-200 bg-neutral-50 text-[10px] font-bold uppercase tracking-wider text-neutral-500">
+                  <th className="py-2.5 px-3">Product / Program</th>
+                  <th className="py-2.5 px-3">Registration Status</th>
+                  <th className="py-2.5 px-3">Linked Tax Dossier</th>
+                  <th className="py-2.5 px-3 text-right">Driven Sales</th>
+                  <th className="py-2.5 px-3 text-right">Sourced Revenue</th>
+                  <th className="py-2.5 px-3 text-right">Earned Commission</th>
+                  <th className="py-2.5 px-3 text-right">Admin Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-neutral-200">
+                {data.productBreakdown?.map((prod) => {
+                  const isActive = prod.status === 'ACTIVE';
+                  const isPending = prod.status === 'PENDING_REVIEW';
+                  const isBusy = programActionLoading === prod.productId;
+
+                  return (
+                    <tr key={prod.productId} className="hover:bg-neutral-50/70 transition">
+                      <td className="py-3 px-3">
+                        <strong className="text-xs font-bold text-neutral-900 block">{prod.name}</strong>
+                        <span className="text-[10px] text-neutral-400">{prod.category} &bull; {(prod.defaultCommissionRate * 100).toFixed(0)}% Rate</span>
+                        {prod.strategyNotes && (
+                          <span className="block text-[10px] text-neutral-500 italic mt-0.5">Strategy: &ldquo;{prod.strategyNotes}&rdquo;</span>
+                        )}
+                      </td>
+                      <td className="py-3 px-3">
+                        {isActive ? (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5">
+                            <CheckCircle2 className="h-3 w-3" />
+                            <span>Active Partner</span>
+                          </span>
+                        ) : isPending ? (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-800 border border-amber-300 px-2 py-0.5">
+                            <span>Pending Review</span>
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-neutral-100 text-neutral-600 border border-neutral-300 px-2 py-0.5">
+                            <span>Not Enrolled</span>
+                          </span>
+                        )}
+                      </td>
+                      <td className="py-3 px-3">
+                        <div className="text-[11px] space-y-0.5">
+                          <span className="font-semibold text-neutral-800 block">
+                            {prod.linkedTaxForm || 'W-8BEN'} ({prod.linkedTaxId || 'CERTIFIED'})
+                          </span>
+                          <span className="text-[10px] text-neutral-500 block truncate max-w-[140px]">
+                            {prod.linkedLegalName || data.email}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-3 px-3 text-right font-bold text-neutral-900">
+                        {prod.conversionsCount}
+                      </td>
+                      <td className="py-3 px-3 text-right font-extrabold text-[#09090B]">
+                        ${(prod.sourcedRevenue / 100).toFixed(2)}
+                      </td>
+                      <td className="py-3 px-3 text-right font-extrabold text-emerald-700">
+                        ${(prod.commissionEarned / 100).toFixed(2)}
+                      </td>
+                      <td className="py-3 px-3 text-right">
+                        {isActive ? (
+                          <button
+                            onClick={() => handleProgramAction(prod.productId, 'REVOKE')}
+                            disabled={isBusy}
+                            className="border border-rose-300 bg-white hover:bg-rose-50 text-rose-700 px-2.5 py-1 text-[11px] font-bold transition disabled:opacity-50 cursor-pointer"
+                          >
+                            {isBusy ? '...' : 'Revoke'}
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleProgramAction(prod.productId, 'APPROVE')}
+                            disabled={isBusy}
+                            className="bg-black hover:bg-neutral-800 text-white px-2.5 py-1 text-[11px] font-bold transition disabled:opacity-50 cursor-pointer"
+                          >
+                            {isBusy ? '...' : 'Approve'}
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
 
         </div>

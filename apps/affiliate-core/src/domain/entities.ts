@@ -55,10 +55,24 @@ export interface PayoutData {
   currency: string;
 }
 
+export interface ProgramEnrollment {
+  productId: string;
+  status: 'ACTIVE' | 'PENDING_REVIEW' | 'REJECTED' | 'SUSPENDED';
+  enrolledAt: string;
+  strategyNotes?: string;
+  linkedTaxForm?: string;
+  linkedLegalName?: string;
+  linkedTaxId?: string;
+  linkedTaxCountry?: string;
+  linkedChannels?: string[];
+  linkedPrimaryUrl?: string;
+}
+
 export interface OnboardingData {
   promotional?: PromotionalData;
   tax?: TaxData;
   payout?: PayoutData;
+  programs?: Record<string, ProgramEnrollment>;
 }
 
 export interface Merchant {
@@ -109,6 +123,12 @@ export interface Conversion {
   status: ConversionStatus;
   approvedAt?: Date | null;
   createdAt: Date;
+  merchant?: {
+    id: string;
+    productId: string;
+    name: string;
+    defaultCommissionRate?: number | null;
+  };
 }
 
 export interface CommissionLedgerEntry {

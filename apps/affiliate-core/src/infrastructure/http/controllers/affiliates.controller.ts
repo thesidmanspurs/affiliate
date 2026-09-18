@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, NotFoundException, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { IsIn, IsObject, IsString } from 'class-validator';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AffiliateJwtGuard } from '../guards/affiliate-jwt.guard';
@@ -10,6 +10,8 @@ import {
   ConversionRepository,
 } from '../../../domain/ports';
 import { Inject } from '@nestjs/common';
+import { PrismaService } from '../../persistence/prisma.service';
+import { PRODUCT_METADATA } from './products.controller';
 
 class UpdatePayoutMethodDto {
   @IsIn(['bank', 'bank_account', 'debit_card', 'card', 'momo', 'paypal']) type: string;
@@ -27,6 +29,7 @@ export class AffiliatesController {
     private readonly getStats: GetDashboardStatsUseCase,
     @Inject(AFFILIATE_REPOSITORY) private readonly affiliates: AffiliateRepository,
     @Inject(CONVERSION_REPOSITORY) private readonly conversions: ConversionRepository,
+    private readonly prisma: PrismaService,
   ) {}
 
   @ApiOperation({ summary: 'Get current affiliate profile' })
@@ -69,6 +72,97 @@ export class AffiliatesController {
   async updatePayoutMethod(@Req() req: any, @Body() dto: UpdatePayoutMethodDto) {
     await this.affiliates.updatePayoutMethod(req.user.affiliateId, dto);
     return { ok: true };
+  }
+
+  @ApiOperation({ summary: 'Get all ecosystem programs with affiliate enrollment status & per-product revenue' })
+  @Get('programs')
+  async getPrograms(@Req() req: any) {
+    const affiliate = await this.affiliates.findById(req.user.affiliateId);
+    if (!affiliate) return [];
+
+    const [merchants, stats] = await Promise.all([
+      this.prisma.merchant.findMany({ where: { isActive: true }, orderBy: { createdAt: 'asc' } }),
+      this.getStats.execute(req.user.affiliateId),
+    ]);
+
+    const onboarding = (affiliate.onboardingData as any) || {};
+    const programs = onboarding.programs || {};
+    const tax = onboarding.tax || {};
+    const hasTaxDeclared = Boolean(tax.taxId || tax.certificationAccepted || tax.formType || tax.taxForm);
+
+    return merchants.map((m) => {
+      const meta = PRODUCT_METADATA[m.productId] || {};
+      const enrollment = programs[m.productId];
+      const productStat = stats.byProduct?.[m.productId];
+
+      let status: 'ACTIVE' | 'PENDING_REVIEW' | 'AVAILABLE' | 'REJECTED' = 'AVAILABLE';
+      if (enrollment) {
+        status = enrollment.status;
+      } else if (affiliate.status === 'ACTIVE' && (affiliate.merchantId === m.id || !affiliate.merchantId)) {
+        status = 'ACTIVE';
+      }
+
+      return {
+        id: m.id,
+        productId: m.productId,
+        name: m.name,
+        tagline: meta.tagline || 'Innotek AI Application',
+        description: meta.description || '',
+        category: meta.category || 'AI SaaS',
+        defaultCommissionRate: m.defaultCommissionRate ?? meta.defaultCommissionRate ?? 0.20,
+        commissionType: m.commissionType || meta.commissionType || 'recurring',
+        averageOrderValue: meta.averageOrderValue || 2900,
+        currency: meta.currency || 'USD',
+        websiteUrl: meta.websiteUrl || `https://${m.productId}.innotek.global`,
+        logoUrl: m.logoUrl || meta.websiteUrl,
+        features: meta.features || [],
+        targetAudience: meta.targetAudience || '',
+        status,
+        enrolledAt: enrollment?.enrolledAt || (status === 'ACTIVE' ? affiliate.reviewedAt || affiliate.createdAt : null),
+        strategyNotes: enrollment?.strategyNotes || '',
+        linkedCompliance: enrollment ? {
+          taxForm: enrollment.linkedTaxForm,
+          legalName: enrollment.linkedLegalName,
+          taxId: enrollment.linkedTaxId,
+          taxCountry: enrollment.linkedTaxCountry,
+          channels: enrollment.linkedChannels,
+          primaryUrl: enrollment.linkedPrimaryUrl,
+        } : null,
+        performance: {
+          conversionsCount: productStat?.conversionsCount || 0,
+          sourcedRevenue: productStat?.sourcedRevenue || 0,
+          earnedCommission: productStat?.totalCommission || 0,
+          pendingCommission: productStat?.pendingCommission || 0,
+          approvedCommission: productStat?.approvedCommission || 0,
+        },
+        hasTaxDeclared,
+      };
+    });
+  }
+
+  @ApiOperation({ summary: 'Apply / Enroll in a specific Innotek product affiliate program' })
+  @Post('programs/:productId/apply')
+  async enrollProgram(@Req() req: any, @Param('productId') productId: string, @Body() body: any) {
+    const affiliate = await this.affiliates.findById(req.user.affiliateId);
+    if (!affiliate) throw new NotFoundException('Affiliate not found');
+
+    const onboarding = (affiliate.onboardingData as any) || {};
+    const tax = onboarding.tax || {};
+    const hasTaxDeclared = Boolean(tax.taxId || tax.certificationAccepted || tax.formType || tax.taxForm);
+
+    if (!hasTaxDeclared) {
+      throw new BadRequestException({
+        code: 'TAX_DECLARATION_REQUIRED',
+        message: 'A certified tax declaration (W-8BEN / W-9 / HMRC) is required before enrolling in affiliate programs.',
+      });
+    }
+
+    const updated = await this.affiliates.enrollProgram(req.user.affiliateId, productId, body?.strategyNotes);
+    const updatedPrograms = (updated.onboardingData as any)?.programs || {};
+    return {
+      ok: true,
+      program: updatedPrograms[productId],
+    };
   }
 
   @ApiOperation({ summary: 'Update partner profile, tax declaration, and payout settings' })

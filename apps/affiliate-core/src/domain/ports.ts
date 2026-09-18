@@ -36,6 +36,7 @@ export interface AffiliateRepository {
   reviewAffiliate(id: string, status: Affiliate['status'], rejectionReason?: string, reapplyAfter?: Date): Promise<Affiliate>;
   reapply(id: string): Promise<Affiliate>;
   updateProfile(id: string, data: { tax?: any; promotional?: any; payout?: any; payoutMethod?: any }): Promise<Affiliate>;
+  enrollProgram(affiliateId: string, productId: string, strategyNotes?: string): Promise<Affiliate>;
 }
 
 export interface ClickRepository {

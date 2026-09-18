@@ -117,6 +117,44 @@ export class PrismaAffiliateRepository implements AffiliateRepository {
     });
     return res as unknown as Affiliate;
   }
+
+  async enrollProgram(affiliateId: string, productId: string, strategyNotes?: string): Promise<Affiliate> {
+    const existing = await this.prisma.affiliate.findUnique({ where: { id: affiliateId } });
+    const existingOnboarding = (existing?.onboardingData as any) || {};
+    const existingPrograms = existingOnboarding.programs || {};
+
+    const tax = existingOnboarding.tax || {};
+    const promotional = existingOnboarding.promotional || {};
+
+    const programEntry = {
+      productId,
+      status: 'ACTIVE',
+      enrolledAt: new Date().toISOString(),
+      strategyNotes: strategyNotes || promotional.promotionalStrategy || promotional.strategyNotes || '',
+      linkedTaxForm: tax.formType || tax.taxForm || 'W-8BEN',
+      linkedLegalName: tax.legalName || tax.signedName || '',
+      linkedTaxId: tax.taxId ? (tax.taxId.length > 4 ? `***${tax.taxId.slice(-4)}` : tax.taxId) : 'CERTIFIED',
+      linkedTaxCountry: tax.taxCountry || tax.taxResidenceCountry || tax.country || 'GB',
+      linkedChannels: promotional.channelTypes || promotional.channels || ['Direct Referral / Website'],
+      linkedPrimaryUrl: promotional.primaryUrl || promotional.channelUrl || '',
+    };
+
+    const updatedOnboarding = {
+      ...existingOnboarding,
+      programs: {
+        ...existingPrograms,
+        [productId]: programEntry,
+      },
+    };
+
+    const res = await this.prisma.affiliate.update({
+      where: { id: affiliateId },
+      data: {
+        onboardingData: updatedOnboarding as Prisma.InputJsonValue,
+      },
+    });
+    return res as unknown as Affiliate;
+  }
 }
 
 @Injectable()
@@ -173,8 +211,17 @@ export class PrismaConversionRepository implements ConversionRepository {
     return this.prisma.conversion.update({ where: { id }, data: { status: 'APPROVED', approvedAt } });
   }
 
-  listByAffiliate(affiliateId: string): Promise<Conversion[]> {
-    return this.prisma.conversion.findMany({ where: { affiliateId }, orderBy: { createdAt: 'desc' } });
+  async listByAffiliate(affiliateId: string): Promise<Conversion[]> {
+    const res = await this.prisma.conversion.findMany({
+      where: { affiliateId },
+      include: {
+        merchant: {
+          select: { id: true, productId: true, name: true, defaultCommissionRate: true },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+    return res as unknown as Conversion[];
   }
 }
 
