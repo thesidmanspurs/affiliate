@@ -89,7 +89,7 @@ export function ConnectEarnGrow() {
         </div>
 
         {/* Decorative Bottom Illustration Graphic */}
-        <div className="mt-16 max-w-5xl mx-auto overflow-hidden rounded-3xl border border-neutral-200 shadow-xl bg-white">
+        <div className="mt-16 max-w-5xl mx-auto bg-white">
           <img
             src="/images/innotek-partner-collage.jpg"
             alt="Innotek Global SaaS Partner Network - Connect, Earn, Grow"

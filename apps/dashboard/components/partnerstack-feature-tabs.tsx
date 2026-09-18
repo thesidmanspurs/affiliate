@@ -90,7 +90,7 @@ export function PartnerStackFeatureTabs() {
   const currentTab = TABS[activeTab];
 
   return (
-    <section id="features" className="scroll-mt-24 py-20 sm:py-28 bg-transparent text-[#09090B] overflow-hidden relative border-t border-b border-neutral-200/80 font-sans">
+    <section id="features" className="scroll-mt-24 py-20 sm:py-28 bg-[#F7F5F0] text-[#09090B] overflow-hidden relative border-t border-b border-neutral-200/80 font-sans">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Top Mini-Title & Main Bold Headline */}
