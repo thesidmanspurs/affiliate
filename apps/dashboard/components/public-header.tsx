@@ -93,7 +93,7 @@ export function PublicHeader() {
       clearTimeout(dropdownTimeoutRef.current);
       dropdownTimeoutRef.current = null;
     }
-    setActiveDropdown((prev) => (prev === menu ? null : menu));
+    setActiveDropdown(menu);
   };
 
   const closeDropdown = () => {
@@ -138,9 +138,6 @@ export function PublicHeader() {
                 src="/logos/innotek.png"
                 alt="Innotek Global"
                 className="h-8 w-auto object-contain"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/logos/innotek-white.svg';
-                }}
               />
             </div>
             <span className="font-mono text-[11px] font-bold text-neutral-500 bg-neutral-100 border border-neutral-200 px-2 py-0.5 rounded tracking-wider uppercase">

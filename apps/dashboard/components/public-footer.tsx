@@ -16,9 +16,6 @@ export function PublicFooter() {
                 src="/logos/innotek-white.svg"
                 alt="Innotek Global"
                 className="h-full w-full object-contain object-left"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/logos/innotek.png';
-                }}
               />
             </Link>
             <p className="text-neutral-400 leading-relaxed text-[11px]">

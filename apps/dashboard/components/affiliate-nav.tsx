@@ -162,9 +162,6 @@ export function AffiliateNav({ affiliateCode, email, status, notifications = [] 
                   src="/logos/innotek.png"
                   alt="Innotek Global"
                   className="h-7 w-auto object-contain"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/logos/innotek-logo.svg';
-                  }}
                 />
               </div>
             </Link>

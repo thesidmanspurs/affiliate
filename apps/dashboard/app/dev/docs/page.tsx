@@ -501,9 +501,6 @@ curl -X POST "https://<AFFILIATE_GATEWAY_URL_PROVIDED_BY_ADMIN>/api/conversions"
                 src="/logos/innotek.png"
                 alt="Innotek Logo"
                 className="h-8 w-auto object-contain"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/logos/innotek-logo.svg';
-                }}
               />
               <span className="font-display text-base sm:text-lg font-extrabold tracking-tight text-zinc-950">
                 Affiliate Developer Documentation

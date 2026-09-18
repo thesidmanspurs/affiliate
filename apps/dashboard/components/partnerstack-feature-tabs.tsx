@@ -66,41 +66,19 @@ const AUTO_PLAY_DURATION = 5000; // 5 seconds
 
 export function PartnerStackFeatureTabs() {
   const [activeTab, setActiveTab] = useState(0);
-  const [progress, setProgress] = useState(0);
   const [copied, setCopied] = useState(false);
-  const startTimeRef = useRef<number>(Date.now());
-  const animationFrameRef = useRef<number | null>(null);
 
-  // 5-Second Progress Timer Loop
+  // 5-Second Tab Auto-Advance Timer (Zero re-renders during cycle)
   useEffect(() => {
-    startTimeRef.current = Date.now();
-    setProgress(0);
+    const timer = setInterval(() => {
+      setActiveTab((prev) => (prev + 1) % TABS.length);
+    }, AUTO_PLAY_DURATION);
 
-    const updateTimer = () => {
-      const elapsed = Date.now() - startTimeRef.current;
-      const currentProgress = Math.min((elapsed / AUTO_PLAY_DURATION) * 100, 100);
-      setProgress(currentProgress);
-
-      if (elapsed >= AUTO_PLAY_DURATION) {
-        setActiveTab((prev) => (prev + 1) % TABS.length);
-        startTimeRef.current = Date.now();
-        setProgress(0);
-      } else {
-        animationFrameRef.current = requestAnimationFrame(updateTimer);
-      }
-    };
-
-    animationFrameRef.current = requestAnimationFrame(updateTimer);
-
-    return () => {
-      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
-    };
+    return () => clearInterval(timer);
   }, [activeTab]);
 
   const handleSelectTab = (index: number) => {
     setActiveTab(index);
-    startTimeRef.current = Date.now();
-    setProgress(0);
   };
 
   const handleCopy = () => {
@@ -142,8 +120,11 @@ export function PartnerStackFeatureTabs() {
                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-neutral-300/70 rounded-full overflow-hidden">
                     {isActive && (
                       <div
-                        className="w-full bg-black rounded-full transition-all ease-linear"
-                        style={{ height: `${progress}%` }}
+                        key={`tab-fill-${activeTab}`}
+                        className="w-full bg-black rounded-full"
+                        style={{
+                          animation: `progress-vertical ${AUTO_PLAY_DURATION}ms linear forwards`,
+                        }}
                       />
                     )}
                   </div>
