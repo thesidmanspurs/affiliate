@@ -117,7 +117,7 @@ export function PublicHeader() {
   };
 
   return (
-    <header ref={headerRef} className="sticky top-0 z-50 w-full bg-white shadow-xs border-b border-neutral-200">
+    <header ref={headerRef} className="sticky top-0 z-50 w-full bg-[#F8F9FD] shadow-xs border-b border-neutral-200">
       {/* 1. Top Announcement Trim Bar */}
       <div className="bg-[#F8F9FD] border-b border-neutral-200/80 px-4 py-2 text-center text-xs font-medium text-neutral-800 flex items-center justify-center gap-2">
         <span>Thrive 2026: The AI Partnership &amp; Recurring Growth Ecosystem.</span>
@@ -317,7 +317,7 @@ export function PublicHeader() {
       {/* 3. MEGA-MENU CONTAINER: PLATFORM */}
       {activeDropdown === 'platform' && (
         <div
-          className="absolute left-0 right-0 top-full z-50 bg-white text-[#09090B] border-t border-neutral-200 shadow-2xl transition-all"
+          className="absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all"
           onMouseEnter={() => {
             if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
           }}
@@ -468,7 +468,7 @@ export function PublicHeader() {
       {/* 4. MEGA-MENU CONTAINER: SOLUTIONS */}
       {activeDropdown === 'solutions' && (
         <div
-          className="absolute left-0 right-0 top-full z-50 bg-white text-[#09090B] border-t border-neutral-200 shadow-2xl transition-all"
+          className="absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all"
           onMouseEnter={() => {
             if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
           }}
@@ -579,7 +579,7 @@ export function PublicHeader() {
       {/* 5. MEGA-MENU CONTAINER: FOR PARTNERS & PUBLISHERS */}
       {activeDropdown === 'partners' && (
         <div
-          className="absolute left-0 right-0 top-full z-50 bg-white text-[#09090B] border-t border-neutral-200 shadow-2xl transition-all"
+          className="absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all"
           onMouseEnter={() => {
             if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
           }}
@@ -739,7 +739,7 @@ export function PublicHeader() {
       {/* 6. MEGA-MENU CONTAINER: RESOURCES */}
       {activeDropdown === 'resources' && (
         <div
-          className="absolute left-0 right-0 top-full z-50 bg-white text-[#09090B] border-t border-neutral-200 shadow-2xl transition-all"
+          className="absolute left-0 right-0 top-full z-50 bg-[#F7F5F0] text-[#09090B] border-t border-neutral-300 shadow-2xl transition-all"
           onMouseEnter={() => {
             if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
           }}

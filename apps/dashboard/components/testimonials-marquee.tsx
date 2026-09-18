@@ -177,8 +177,8 @@ export function TestimonialsMarquee() {
         <div className="space-y-6 overflow-hidden relative">
           
           {/* Ambient Fade Mask on Left & Right */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-[#E5E8EC] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l from-[#E5E8EC] to-transparent z-10 pointer-events-none" />
 
           {/* Row 1: Affiliates & Creators - Scrolls Left Continuously */}
           <div className="overflow-hidden w-full flex">
