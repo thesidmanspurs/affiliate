@@ -6,7 +6,7 @@ export function CoinsBackgroundPattern() {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none select-none overflow-hidden -z-50 opacity-20 print:hidden"
+      className="fixed inset-0 pointer-events-none select-none overflow-hidden z-0 opacity-20 print:hidden"
     >
       {/* Ambient soft glow spots for subtle depth */}
       <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-neutral-500/20 blur-3xl" />

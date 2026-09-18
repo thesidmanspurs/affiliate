@@ -5,7 +5,7 @@ import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export function PartnerStackHero() {
   return (
-    <section className="relative pt-12 pb-20 sm:pt-20 sm:pb-28 overflow-hidden bg-[#F7F5F0] border-b border-neutral-200">
+    <section className="relative pt-12 pb-20 sm:pt-20 sm:pb-28 overflow-hidden bg-transparent border-b border-neutral-200/80">
       
       {/* Background Subtle Gradient Glows */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
