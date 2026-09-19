@@ -89,7 +89,7 @@ export function CommissionsClient({
   };
 
   return (
-    <div className="space-y-5 text-[#09090B] pb-16 max-w-6xl mx-auto font-sans bg-white">
+    <div className="space-y-5 text-[#09090B] pb-16 max-w-6xl mx-auto font-sans">
       
       {/* 1. Header (PartnerStack Style: INNOTEK GLOBAL -> Rewards & withdrawals) */}
       <div className="space-y-0.5">

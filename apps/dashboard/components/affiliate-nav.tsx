@@ -151,7 +151,7 @@ export function AffiliateNav({ affiliateCode, email, status, notifications = [] 
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-[#F8F9FD] border-b border-neutral-200 shadow-2xs font-sans">
+      <header className="sticky top-0 z-40 w-full bg-white border-b border-neutral-200 shadow-2xs font-sans">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8 h-14">
           
           {/* Left: Official Innotek Logo + Navigation Tabs */}
