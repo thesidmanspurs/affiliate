@@ -18,6 +18,8 @@ export async function updateTaxDeclarationAction(data: {
   city: string;
   stateProv: string;
   postalCode: string;
+  dateOfBirth?: string;
+  signerCapacity?: string;
   electronicSignature: string;
 }) {
   const token = await requireAuth();
@@ -25,12 +27,15 @@ export async function updateTaxDeclarationAction(data: {
   const payload = {
     tax: {
       formType: data.formType,
+      taxForm: data.formType,
       taxClassification: data.taxClassification,
       legalName: data.legalName,
+      signedName: data.electronicSignature,
       businessType: data.businessType,
       taxId: data.taxId,
       utrOrNino: data.taxId,
       taxResidenceCountry: data.taxResidenceCountry,
+      taxCountry: data.taxResidenceCountry,
       vatRegistered: Boolean(data.vatRegistered),
       vatNumber: data.vatNumber || undefined,
       companiesHouseCrn: data.companiesHouseCrn || undefined,
@@ -42,6 +47,12 @@ export async function updateTaxDeclarationAction(data: {
         postalCode: data.postalCode,
         country: data.taxResidenceCountry,
       },
+      dateOfBirth: data.dateOfBirth || undefined,
+      signerCapacity: data.signerCapacity || 'Individual Beneficial Owner',
+      treatyBenefits: data.taxClassification === 'INTERNATIONAL',
+      treatyCountry: data.taxClassification === 'INTERNATIONAL' ? data.taxResidenceCountry : undefined,
+      treatyArticle: data.taxClassification === 'INTERNATIONAL' ? 'Article 12 (Royalties / Independent Personal Services)' : undefined,
+      treatyWithholdingRate: '0%',
       electronicSignature: data.electronicSignature,
       signedAt: new Date().toISOString(),
       certificationAccepted: true,
@@ -60,40 +71,60 @@ export async function updateTaxDeclarationAction(data: {
 }
 
 export async function updatePayoutRailAction(data: {
-  type: string;
-  bankName: string;
-  accountName: string;
-  accountNumber: string;
+  method: 'bank_account' | 'debit_card';
+  beneficiaryName: string;
+  bankName?: string;
+  accountNumberOrIban?: string;
   sortCode?: string;
-  currency?: string;
+  swiftBic?: string;
+  cardNumber?: string;
+  cardExpiry?: string;
+  cardBrand?: string;
+  currency: string;
 }) {
   const token = await requireAuth();
 
-  const details = {
-    bankName: data.bankName,
-    accountName: data.accountName,
-    accountNumber: data.accountNumber,
+  const details: Record<string, string> = {
+    beneficiaryName: data.beneficiaryName,
+    accountName: data.beneficiaryName,
+    bankName: data.bankName || '',
+    accountNumber: data.accountNumberOrIban || '',
     sortCode: data.sortCode || '',
+    swiftBic: data.swiftBic || '',
     currency: data.currency || 'USD',
+    cardNumberLast4: data.cardNumber ? data.cardNumber.replace(/\s+/g, '').slice(-4) : '',
+    cardBrand: data.cardBrand || '',
+    cardExpiry: data.cardExpiry || '',
+  };
+
+  const payoutPayload = {
+    payout: {
+      method: data.method,
+      stripeRail: data.method === 'bank_account' ? 'stripe_payouts_bank' : 'stripe_instant_payouts_card',
+      beneficiaryName: data.beneficiaryName,
+      accountName: data.beneficiaryName,
+      bankName: data.bankName || undefined,
+      accountNumberOrIban: data.accountNumberOrIban || undefined,
+      accountNumber: data.accountNumberOrIban || undefined,
+      sortCode: data.sortCode || undefined,
+      routingOrSortCode: data.sortCode || undefined,
+      swiftBic: data.swiftBic || undefined,
+      routingOrSwift: data.swiftBic || undefined,
+      cardNumberLast4: data.cardNumber ? data.cardNumber.replace(/\s+/g, '').slice(-4) : undefined,
+      cardBrand: data.cardBrand || undefined,
+      cardExpiry: data.cardExpiry || undefined,
+      currency: data.currency || 'USD',
+    },
   };
 
   await Promise.all([
     apiFetch('/affiliates/me/payout-method', token, {
       method: 'PATCH',
-      body: JSON.stringify({ type: data.type, details }),
+      body: JSON.stringify({ type: data.method, details }),
     }),
     apiFetch('/affiliates/me/profile', token, {
       method: 'PATCH',
-      body: JSON.stringify({
-        payout: {
-          method: data.type,
-          beneficiaryName: data.accountName,
-          bankName: data.bankName,
-          accountNumberOrIban: data.accountNumber,
-          sortCode: data.sortCode,
-          currency: data.currency || 'USD',
-        },
-      }),
+      body: JSON.stringify(payoutPayload),
     }),
   ]);
 
