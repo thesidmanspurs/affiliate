@@ -28,6 +28,10 @@ import {
   PayoutRailsForm,
   PayoutRailData,
 } from '@/components/compliance/payout-rails-form';
+import {
+  PromotionalProfileForm,
+  PromotionalProfileData,
+} from '@/components/compliance/promotional-profile-form';
 
 export interface AffiliateProfile {
   id: string;
@@ -71,10 +75,16 @@ export interface AffiliateProfile {
       channels?: string[];
       channelTypes?: string[];
       primaryUrl?: string;
+      channelUrl?: string;
       monthlyReach?: string;
       targetRegions?: string[];
+      audienceRegions?: string[];
       niche?: string;
       promotionalStrategy?: string;
+      strategyNotes?: string;
+      asaAccepted?: boolean;
+      antiSpamAccepted?: boolean;
+      ftcComplianceAccepted?: boolean;
     };
     payout?: {
       method?: string;
@@ -186,12 +196,35 @@ export function SettingsClient({ profile }: { profile: AffiliateProfile }) {
       (existingTax?.taxClassification === 'UK_DOMESTIC' ? 'GBP' : 'USD'),
   };
 
-  // Form states - Profile
-  const [companyName, setCompanyName] = useState(existingPromo?.companyName || '');
-  const [primaryUrl, setPrimaryUrl] = useState(existingPromo?.primaryUrl || '');
-  const [companyLogoUrl, setCompanyLogoUrl] = useState(existingPromo?.companyLogoUrl || '');
-  const [niche, setNiche] = useState(existingPromo?.niche || 'AI & B2B SaaS Software');
-  const [promotionalStrategy, setPromotionalStrategy] = useState(existingPromo?.promotionalStrategy || '');
+  // Pre-fill Promotional Profile Data
+  const initialPromoData: Partial<PromotionalProfileData> = {
+    companyName:
+      existingPromo?.companyName ||
+      existingTax?.legalName ||
+      initialTaxData.legalName ||
+      '',
+    companyLogoUrl: existingPromo?.companyLogoUrl || '',
+    channelTypes:
+      existingPromo?.channelTypes ||
+      existingPromo?.channels ||
+      ['Content Creator / YouTube / TikTok / Podcast'],
+    primaryUrl: existingPromo?.primaryUrl || (existingPromo as any)?.channelUrl || '',
+    monthlyReach: existingPromo?.monthlyReach || '25,000 - 100,000',
+    targetRegions:
+      existingPromo?.targetRegions ||
+      (existingPromo as any)?.audienceRegions ||
+      ['United Kingdom & Europe', 'Global / Worldwide'],
+    niche: existingPromo?.niche || 'AI & Productivity Tools',
+    promotionalStrategy:
+      existingPromo?.promotionalStrategy ||
+      (existingPromo as any)?.strategyNotes ||
+      '',
+    asaAccepted:
+      existingPromo?.asaAccepted ??
+      (existingPromo as any)?.ftcComplianceAccepted ??
+      true,
+    antiSpamAccepted: existingPromo?.antiSpamAccepted ?? true,
+  };
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -267,19 +300,24 @@ export function SettingsClient({ profile }: { profile: AffiliateProfile }) {
     });
   };
 
-  // Save Profile
-  const handleProfileSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // Save Promotional Media Profile
+  const handleProfileSave = (data: PromotionalProfileData) => {
     setErrorMessage(null);
 
     startTransition(async () => {
       try {
         await updatePartnerProfileAction({
-          companyName,
-          companyLogoUrl,
-          primaryUrl,
-          niche,
-          promotionalStrategy,
+          companyName: data.companyName,
+          companyLogoUrl: data.companyLogoUrl,
+          channelTypes: data.channelTypes,
+          channels: data.channelTypes,
+          primaryUrl: data.primaryUrl,
+          monthlyReach: data.monthlyReach,
+          targetRegions: data.targetRegions,
+          niche: data.niche,
+          promotionalStrategy: data.promotionalStrategy,
+          asaAccepted: data.asaAccepted,
+          antiSpamAccepted: data.antiSpamAccepted,
         });
         showToast('Partner media profile updated successfully.');
       } catch (err: any) {
@@ -583,105 +621,16 @@ export function SettingsClient({ profile }: { profile: AffiliateProfile }) {
          ═════════════════════════════════════════════ */}
       {activeTab === 'profile' && (
         <div className="space-y-6 animate-in fade-in duration-150">
-          
-          <div className="rounded-2xl border border-neutral-200 bg-white p-6 sm:p-8 space-y-6 shadow-xs">
-            <div className="flex items-center gap-3.5 border-b border-neutral-200 pb-5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-100 border border-neutral-200 text-black">
-                <User className="h-5 w-5" />
-              </div>
-              <div>
-                <h2 className="font-display text-base sm:text-lg font-bold text-[#09090B]">
-                  Verified Media Profile &amp; Channels
-                </h2>
-                <p className="text-xs text-neutral-500 mt-0.5">
-                  Update your brand information, primary promotional URL, and audience focus.
-                </p>
-              </div>
-            </div>
-
-            <form onSubmit={handleProfileSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
-                <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-neutral-800 mb-1.5">
-                    Brand / Company / Creator Name
-                  </label>
-                  <input
-                    type="text"
-                    value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                    placeholder="e.g. TechInsights UK or Oliver Vance"
-                    className="w-full rounded-xl border border-neutral-300 bg-white px-3.5 py-2.5 text-xs sm:text-sm text-[#09090B] outline-none focus:border-black focus:ring-1 focus:ring-black shadow-2xs"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-neutral-800 mb-1.5">
-                    Primary Channel or Website URL
-                  </label>
-                  <input
-                    type="url"
-                    value={primaryUrl}
-                    onChange={(e) => setPrimaryUrl(e.target.value)}
-                    placeholder="https://youtube.com/@techinsights or https://techinsights.co.uk"
-                    className="w-full rounded-xl border border-neutral-300 bg-white px-3.5 py-2.5 text-xs sm:text-sm text-[#09090B] font-mono outline-none focus:border-black focus:ring-1 focus:ring-black shadow-2xs"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-neutral-800 mb-1.5">
-                    Brand Logo or Avatar URL (Optional)
-                  </label>
-                  <input
-                    type="url"
-                    value={companyLogoUrl}
-                    onChange={(e) => setCompanyLogoUrl(e.target.value)}
-                    placeholder="https://innotek.global/assets/your-logo.png"
-                    className="w-full rounded-xl border border-neutral-300 bg-white px-3.5 py-2.5 text-xs sm:text-sm text-[#09090B] font-mono outline-none focus:border-black focus:ring-1 focus:ring-black shadow-2xs"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-neutral-800 mb-1.5">
-                    Primary Audience Vertical &amp; Niche
-                  </label>
-                  <input
-                    type="text"
-                    value={niche}
-                    onChange={(e) => setNiche(e.target.value)}
-                    placeholder="e.g. AI Video Creation, HR Tech, Sports Analytics"
-                    className="w-full rounded-xl border border-neutral-300 bg-white px-3.5 py-2.5 text-xs sm:text-sm text-[#09090B] outline-none focus:border-black focus:ring-1 focus:ring-black shadow-2xs"
-                  />
-                </div>
-
-                <div className="sm:col-span-2">
-                  <label className="block text-xs sm:text-sm font-semibold text-neutral-800 mb-1.5">
-                    Promotional Strategy Notes
-                  </label>
-                  <textarea
-                    rows={3}
-                    value={promotionalStrategy}
-                    onChange={(e) => setPromotionalStrategy(e.target.value)}
-                    placeholder="Describe how you promote Innotek AI applications (e.g. YouTube tutorial deep-dives, blog comparison reviews, LinkedIn creator audience)..."
-                    className="w-full rounded-xl border border-neutral-300 bg-white p-3.5 text-xs sm:text-sm text-[#09090B] outline-none focus:border-black focus:ring-1 focus:ring-black shadow-2xs leading-relaxed"
-                  />
-                </div>
-
-              </div>
-
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  disabled={isPending}
-                  className="rounded-xl bg-black px-6 py-3 text-xs sm:text-sm font-bold text-white shadow-sm hover:bg-neutral-800 transition disabled:opacity-50 flex items-center gap-2 cursor-pointer"
-                >
-                  {isPending && <RefreshCw className="h-4 w-4 animate-spin" />}
-                  <span>Save Partner Profile</span>
-                </button>
-              </div>
-            </form>
+          <div className="rounded-2xl border-2 border-black bg-white p-6 sm:p-8 shadow-md">
+            <PromotionalProfileForm
+              initialData={initialPromoData}
+              legalNameFallback={existingTax?.legalName || initialTaxData.legalName || ''}
+              onSave={handleProfileSave}
+              isPending={isPending}
+              submitButtonLabel="Save Partner Media Profile"
+              mode="standalone"
+            />
           </div>
-
         </div>
       )}
 

@@ -136,9 +136,15 @@ export async function updatePayoutRailAction(data: {
 export async function updatePartnerProfileAction(data: {
   companyName: string;
   companyLogoUrl?: string;
+  channels?: string[];
+  channelTypes?: string[];
   primaryUrl: string;
+  monthlyReach?: string;
+  targetRegions?: string[];
   niche?: string;
   promotionalStrategy?: string;
+  asaAccepted?: boolean;
+  antiSpamAccepted?: boolean;
 }) {
   const token = await requireAuth();
 
@@ -148,10 +154,18 @@ export async function updatePartnerProfileAction(data: {
       promotional: {
         companyName: data.companyName,
         companyLogoUrl: data.companyLogoUrl,
+        channels: data.channelTypes || data.channels,
+        channelTypes: data.channelTypes || data.channels,
         primaryUrl: data.primaryUrl,
         channelUrl: data.primaryUrl,
-        niche: data.niche,
+        monthlyReach: data.monthlyReach,
+        targetRegions: data.targetRegions,
+        audienceRegions: data.targetRegions,
+        niche: data.niche || 'AI & Productivity Tools',
         promotionalStrategy: data.promotionalStrategy,
+        strategyNotes: data.promotionalStrategy,
+        ftcComplianceAccepted: data.asaAccepted ?? true,
+        antiSpamAccepted: data.antiSpamAccepted ?? true,
       },
     }),
   });
