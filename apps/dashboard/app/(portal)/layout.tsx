@@ -59,14 +59,14 @@ export default async function PortalLayout({
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-white text-[#09090B] selection:bg-black selection:text-white relative z-20">
+    <div className="flex min-h-screen flex-col bg-[#F4F5F7] text-[#09090B] selection:bg-black selection:text-white relative z-20">
       <AffiliateNav
         affiliateCode={profile.code}
         email={profile.email}
         status={profile.status}
         notifications={notifications}
       />
-      <main className="flex-1 mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 bg-white">
+      <main className="flex-1 mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {children}
       </main>
     </div>
